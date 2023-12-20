@@ -17,7 +17,7 @@ ATPSPlayer::ATPSPlayer()
 		GetMesh()->SetSkeletalMesh(TempMesh.Object);// 불러온 매쉬장착 해줌
 
 		//매시위치 조정하기
-		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, 90), FRotator(0, 0, -90));
+		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, 0, -90));
 	}
 
 
@@ -39,6 +39,7 @@ ATPSPlayer::ATPSPlayer()
 	// 최상위인 플레이어의 Yaw회전 사용하기위함
 	
 
+	JumpMaxCount = 2;
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +54,9 @@ void ATPSPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
+	Move();
+
 }
 
 // Called to bind functionality to input
@@ -63,6 +67,11 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
+
+	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
+	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
+	//바인딩 액션은 IE_Pressed 처럼 눌러졌을때를 정해줘야함
+	PlayerInputComponent->BindAction(TEXT("Jump"),IE_Pressed, this, &ATPSPlayer::InputJump);
 }
 
 void ATPSPlayer::Turn(float value)
@@ -73,5 +82,40 @@ void ATPSPlayer::Turn(float value)
 void ATPSPlayer::LookUp(float value)
 {
 	AddControllerPitchInput(value); //피치값으로 입력값 적용
+}
+
+void ATPSPlayer::InputHorizontal(float value)
+{
+	dir.Y = value;
+}
+
+void ATPSPlayer::InputVertical(float value)
+{
+	dir.X = value;
+}
+
+void ATPSPlayer::InputJump()
+{
+	Jump();
+}
+
+void ATPSPlayer::Move()
+{
+	dir = FTransform(GetControlRotation()).TransformVector(dir); //절대좌표를 상대좌표 방향으로 바꿔줌
+	// 실제 이동
+	// 현재위치 + 방향 * 속도 * 시간 =  결과위치
+	/*FVector P;
+
+	FVector NowL = GetActorLocation();
+
+	FVector vt = dir * moveSpeed * DeltaTime;
+
+	P = vt + NowL;
+
+	SetActorLocation(P);*/
+	// 대체하기
+	AddMovementInput(dir);
+
+	dir = FVector::ZeroVector;
 }
 

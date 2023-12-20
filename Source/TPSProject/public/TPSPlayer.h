@@ -34,7 +34,19 @@ public:
 	UPROPERTY(VisibleAnywhere, Category=Camera)
 	class UCameraComponent* tpsCamComp;
 
+	float moveSpeed = 500;
+
 	void Turn(float value);
 
 	void LookUp(float value);
+
+	void InputHorizontal(float value);
+
+	void InputVertical(float value);
+
+	void InputJump();
+
+	void Move();
+	
+	FVector dir;
 };
