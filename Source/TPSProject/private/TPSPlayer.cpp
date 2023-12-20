@@ -17,7 +17,7 @@ ATPSPlayer::ATPSPlayer()
 		GetMesh()->SetSkeletalMesh(TempMesh.Object);// 불러온 매쉬장착 해줌
 
 		//매시위치 조정하기
-		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, 0, -90));
+		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, -90, 0));
 	}
 
 
