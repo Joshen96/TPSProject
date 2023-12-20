@@ -34,6 +34,11 @@ public:
 	UPROPERTY(VisibleAnywhere, Category=Camera)
 	class UCameraComponent* tpsCamComp;
 
+	//ÃÑ¸Å½¬ 
+
+	UPROPERTY(VisibleAnywhere, Category=GunMesh)
+	class USkeletalMeshComponent* gunMeshComp;
+
 	float moveSpeed = 500;
 
 	void Turn(float value);
