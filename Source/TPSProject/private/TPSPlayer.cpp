@@ -7,6 +7,8 @@
 #include "Bullet.h"
 #include "Blueprint/UserWidget.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ATPSPlayer::ATPSPlayer()
 {
@@ -81,8 +83,12 @@ void ATPSPlayer::BeginPlay()
 
 	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
 
+	_crosshairUI = CreateWidget(GetWorld(), crosshairUIFactory);
+
+
 	ChangeSniperGun();// 시작 스나이퍼로시작
 	bSniperAim = false;
+	_crosshairUI->AddToViewport();
 }
 
 // Called every frame
@@ -125,11 +131,50 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ATPSPlayer::InputFire()
 {
-	FTransform firePos= gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+
+	if (bUseingGrenadeGun) {
+		FTransform firePos = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+
+		GetWorld()->SpawnActor<ABullet>(bulletFactory, firePos);
+
+	}
+	else
+	{
+		//스나이퍼 총발사 라인트레이서 사용
+		// 카메라시작부터
+		FVector startPos = tpsCamComp->GetComponentLocation();
+		// 카메라의 앞까지
+		FVector endPos = tpsCamComp->GetComponentLocation() + tpsCamComp->GetForwardVector() * 5000;
+
+		FHitResult hitInfo; // 정보받아오기
+
+		FCollisionQueryParams params; // 충돌옵션?
+
+		params.AddIgnoredActor(this); // 자기자신은 무시하도록 설정
+		
+		// 라인을 하나쏴서 한개만 가져오기 (맞은곳, 시작과 끝, 채널, 충돌옵션)
+		bool bHit = GetWorld()->LineTraceSingleByChannel(hitInfo, startPos, endPos, ECC_Visibility, params);
+		// 맞았는지 여부
+		if (bHit) {
+
+			FTransform bulletTrans; //위치 담기위한 트랜스폼
+
+			bulletTrans.SetLocation(hitInfo.ImpactPoint); //트랜스폼을 맞은곳으로 변경
+
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectFactory,bulletTrans); //그곳에 이펙트 구현
+
+			auto hitComp = hitInfo.GetComponent(); 
+			// 맞은것의 컴포넌트 가져오기
+
+			if (hitComp && hitComp->IsSimulatingPhysics()) //맞은것이 있고 맞은것이 물리적용가능하다면 
+			{
+				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 500000; // 맞은 표면에 힘의 반대방향으로 힘을 
+
+				hitComp->AddForce(force);
+			}
+		}
 	
-	GetWorld()->SpawnActor<ABullet>(bulletFactory, firePos);
-	
-	
+	}
 }
 
 void ATPSPlayer::Turn(float value)
@@ -186,6 +231,7 @@ void ATPSPlayer::ChangeGrenadeGun()
 
 void ATPSPlayer::ChangeSniperGun()
 {
+
 	bUseingGrenadeGun = false;
 	sniperMeshComp->SetVisibility(true);
 	gunMeshComp->SetVisibility(false);
@@ -197,17 +243,20 @@ void ATPSPlayer::SniperAim()
 		return;
 
 	}
-	if (bSniperAim == false)
+	if (bSniperAim == false)//줌모드
 	{
 		bSniperAim = true; //스나이퍼 에임 상태 변경
 		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
 		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
+		_crosshairUI->RemoveFromParent();
+
 	}
-	else
+	else// 줌해제
 	{
 		bSniperAim = false; // 스나이퍼에임 상태 변경
 		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
 		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
+		_crosshairUI->AddToViewport();
+
 	}
 }
-
