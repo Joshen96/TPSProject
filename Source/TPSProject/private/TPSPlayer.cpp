@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Bullet.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -77,7 +78,11 @@ ATPSPlayer::ATPSPlayer()
 void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
+
+	ChangeSniperGun();// 시작 스나이퍼로시작
+	bSniperAim = false;
 }
 
 // Called every frame
@@ -105,6 +110,16 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("Jump"),IE_Pressed, this, &ATPSPlayer::InputJump);
 	
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+
+	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &ATPSPlayer::ChangeGrenadeGun);
+	
+	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeSniperGun);
+
+	
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
+	
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
+
 
 }
 
@@ -160,5 +175,39 @@ void ATPSPlayer::Move()
 	AddMovementInput(dir);
 
 	dir = FVector::ZeroVector;
+}
+
+void ATPSPlayer::ChangeGrenadeGun()
+{
+	bUseingGrenadeGun = true;
+	sniperMeshComp->SetVisibility(false);
+	gunMeshComp->SetVisibility(true);
+}
+
+void ATPSPlayer::ChangeSniperGun()
+{
+	bUseingGrenadeGun = false;
+	sniperMeshComp->SetVisibility(true);
+	gunMeshComp->SetVisibility(false);
+}
+
+void ATPSPlayer::SniperAim()
+{
+	if (bUseingGrenadeGun) {
+		return;
+
+	}
+	if (bSniperAim == false)
+	{
+		bSniperAim = true; //스나이퍼 에임 상태 변경
+		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
+		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
+	}
+	else
+	{
+		bSniperAim = false; // 스나이퍼에임 상태 변경
+		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
+		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
+	}
 }
 

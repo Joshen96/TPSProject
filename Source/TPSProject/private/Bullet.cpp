@@ -52,6 +52,7 @@ ABullet::ABullet()
 	movementComp->Bounciness = 0.3f;
 
 	//InitialLifeSpan = 2.0f; // 생명주기
+	
 
 }
 
@@ -62,6 +63,7 @@ void ABullet::BeginPlay()
 	//시간관리 싱글톤 으로 몇초후 처리하는방법
 	FTimerHandle deathTimer;
 	GetWorld()->GetTimerManager().SetTimer(deathTimer, this, &ABullet::Die, 2.0f, false);
+	
 	
 }
 

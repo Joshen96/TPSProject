@@ -31,7 +31,7 @@ public:
 	class USpringArmComponent* springArmComp;
 	//카메라 컴포넌트
 
-	UPROPERTY(VisibleAnywhere, Category=Camera)
+	UPROPERTY(VisibleAnywhere,BluePrintReadOnly, Category=Camera)
 	class UCameraComponent* tpsCamComp;
 
 	//총매쉬 
@@ -74,5 +74,26 @@ public:
 	
 	FVector dir;
 
-	
+	//4. 총교체 함수
+
+	bool bUseingGrenadeGun = false;
+
+	void ChangeGrenadeGun();
+
+	void ChangeSniperGun();
+
+	//5. 스나이퍼 줌 모드
+
+	void SniperAim();
+
+	bool bSniperAim = true;
+
+
+	//스나이퍼 줌 UI관련 
+
+	UPROPERTY(EditDefaultsOnly, Category=SniperUI) //외부에서 UI 가져오고
+	TSubclassOf<class UUserWidget> sniperUIFactory;
+	//여기서 사용할 스나이퍼 유아이 인스턴스
+	class UUserWidget* _sniperUI;
+
 };
