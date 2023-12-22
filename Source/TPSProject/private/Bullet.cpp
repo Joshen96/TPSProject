@@ -51,12 +51,17 @@ ABullet::ABullet()
 	//5. 반동값
 	movementComp->Bounciness = 0.3f;
 
+	//InitialLifeSpan = 2.0f; // 생명주기
+
 }
 
 // Called when the game starts or when spawned
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
+	//시간관리 싱글톤 으로 몇초후 처리하는방법
+	FTimerHandle deathTimer;
+	GetWorld()->GetTimerManager().SetTimer(deathTimer, this, &ABullet::Die, 2.0f, false);
 	
 }
 
@@ -65,5 +70,19 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ABullet::Die()
+{
+	Destroy();
+}
+
+void ABullet::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	if (PropertyChangedEvent.GetPropertyName() == TEXT("speed"))
+	{
+		movementComp->InitialSpeed = speed;
+		movementComp->MaxSpeed = speed;
+	}
 }
 

@@ -37,4 +37,14 @@ public:
 	UPROPERTY(VisibleAnywhere,Category = BodyMesh)
 	class UStaticMeshComponent* bodyMeshComp;
 
+	void Die();
+	
+	
+
+
+	//ÃÑ¾Ë ¼Óµµ
+	UPROPERTY(EditAnywhere, Category = Settings)
+	float speed = 5000;
+
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 };

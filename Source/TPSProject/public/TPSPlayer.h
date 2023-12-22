@@ -39,8 +39,27 @@ public:
 	UPROPERTY(VisibleAnywhere, Category=GunMesh)
 	class USkeletalMeshComponent* gunMeshComp;
 
+	//스나이퍼 총 매쉬
+	UPROPERTY(VisibleAnywhere, Category = GunMesh)
+	class USkeletalMeshComponent* sniperMeshComp;
+
+	
+
+	//움직임속도용
 	float moveSpeed = 500;
 
+	//총발사 구현부분
+
+	//1. 발사구현 팩토리 구현
+	UPROPERTY(EditDefaultsOnly,Category=BulletFactory)
+	TSubclassOf<class ABullet> bulletFactory;
+
+	
+
+	//2. 발사함수
+	void InputFire();
+
+	//3. 이동 부분
 	void Turn(float value);
 
 	void LookUp(float value);
@@ -54,4 +73,6 @@ public:
 	void Move();
 	
 	FVector dir;
+
+	
 };

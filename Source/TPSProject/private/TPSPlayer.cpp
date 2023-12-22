@@ -4,6 +4,7 @@
 #include "TPSPlayer.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Bullet.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -52,6 +53,23 @@ ATPSPlayer::ATPSPlayer()
 		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
 	}
 
+	//스나이퍼 매쉬컴포등록
+	sniperMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SniperGunMeshComp"));
+
+	sniperMeshComp->SetupAttachment(GetMesh());
+
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/SniperGun/sniper1.sniper1'"));
+
+	if (TempGunMesh.Succeeded())
+	{
+		sniperMeshComp->SetSkeletalMesh(TempGunMesh.Object);// 매시 할당하기
+
+		sniperMeshComp->SetRelativeLocation(FVector(-22, 55, 120));//위치 조절
+
+		sniperMeshComp->SetRelativeScale3D(FVector(0.15f));//매쉬 크기조정
+	}
+
 }
 
 
@@ -85,6 +103,18 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	//바인딩 액션은 IE_Pressed 처럼 눌러졌을때를 정해줘야함
 	PlayerInputComponent->BindAction(TEXT("Jump"),IE_Pressed, this, &ATPSPlayer::InputJump);
+	
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+
+}
+
+void ATPSPlayer::InputFire()
+{
+	FTransform firePos= gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+	
+	GetWorld()->SpawnActor<ABullet>(bulletFactory, firePos);
+	
+	
 }
 
 void ATPSPlayer::Turn(float value)
