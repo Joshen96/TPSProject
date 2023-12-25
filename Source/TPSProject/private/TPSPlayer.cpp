@@ -6,8 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Bullet.h"
 #include "Blueprint/UserWidget.h"
-
 #include "Kismet/GameplayStatics.h"
+#include "EnemyFSM.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -62,7 +62,7 @@ ATPSPlayer::ATPSPlayer()
 	sniperMeshComp->SetupAttachment(GetMesh());
 
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/SniperGun/sniper1.sniper1'"));
+	//ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/FPWeapon/Mesh/sniper1.sniper1'"));
 
 	if (TempGunMesh.Succeeded())
 	{
@@ -89,6 +89,8 @@ void ATPSPlayer::BeginPlay()
 	ChangeSniperGun();// 시작 스나이퍼로시작
 	bSniperAim = false;
 	_crosshairUI->AddToViewport();
+
+
 }
 
 // Called every frame
@@ -171,6 +173,17 @@ void ATPSPlayer::InputFire()
 				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 500000; // 맞은 표면에 힘의 반대방향으로 힘을 
 
 				hitComp->AddForce(force);
+			}
+
+			//부딪힌 대상이 먼저 적인지 판단하기
+
+			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
+			if (enemy) {
+				auto enemyFSM = Cast<UEnemyFSM>(enemy);
+
+				enemyFSM->OnDamageProcess(hitInfo);
+
+
 			}
 		}
 	
