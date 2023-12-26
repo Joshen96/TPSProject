@@ -15,11 +15,24 @@ class TPSPROJECT_API UPlayerAnim : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
-	float speed = 0;
+	
 
 	//블루 프린트의 Event Blueprint Update Animation노드와 대응되는 함수
 	
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	//사용할 변수 들
+	//속도
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+	float speed = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+	float direction = 0;
+
+	// 공중인지 여부
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+	bool isInAir = false;
+
+
 
 };

@@ -3,6 +3,9 @@
 
 #include "PlayerAnim.h"
 #include "TPSPlayer.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
+
 void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
@@ -22,6 +25,17 @@ void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 		FVector forwardVector = Player->GetActorForwardVector();
 		//내적으로  speed할당하기 
 		speed = FVector::DotProduct(forwardVector,velocity);
+		
+		//좌우 값 넣기
+		FVector rightVector = Player->GetActorRightVector();
+
+		direction = FVector::DotProduct(rightVector, velocity);
+	
+		// 땅에 섯는지 여부
+		auto movement = Player->GetCharacterMovement();
+		isInAir = movement->IsFalling();
+
+	
 	}
 	
 }
