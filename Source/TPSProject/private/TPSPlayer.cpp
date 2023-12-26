@@ -8,6 +8,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "EnemyFSM.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -81,6 +82,11 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//초기 속도 걷기로 세팅
+	GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
+
+
+	//스나이퍼 위젯설정
 	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
 
 	_crosshairUI = CreateWidget(GetWorld(), crosshairUIFactory);
@@ -89,6 +95,9 @@ void ATPSPlayer::BeginPlay()
 	ChangeSniperGun();// 시작 스나이퍼로시작
 	bSniperAim = false;
 	_crosshairUI->AddToViewport();
+
+
+	
 
 
 }
@@ -127,6 +136,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
 	
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
+
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &ATPSPlayer::InputRun);
 
 
 }
@@ -233,6 +245,20 @@ void ATPSPlayer::Move()
 	AddMovementInput(dir);
 
 	dir = FVector::ZeroVector;
+}
+
+void ATPSPlayer::InputRun()
+{
+	auto movement = GetCharacterMovement();
+
+	if (movement->MaxWalkSpeed > walkSpeed)
+	{
+		movement->MaxWalkSpeed = walkSpeed;
+	}
+	else
+	{
+		movement->MaxWalkSpeed = runSpeed;
+	}
 }
 
 void ATPSPlayer::ChangeGrenadeGun()
