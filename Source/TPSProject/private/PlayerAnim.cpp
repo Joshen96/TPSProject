@@ -1,0 +1,27 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "PlayerAnim.h"
+#include "TPSPlayer.h"
+void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	//플레이어의 이동 속도를 가져와서 speed에 할당하기
+	//소유한 폰 가져오기
+	auto ownerPawn = TryGetPawnOwner(); //애니 인스턴트의 폰을 가져옴
+
+	// 가져온 폰을 플레이어로 캐스팅
+	auto Player = Cast<ATPSPlayer>(ownerPawn);
+	
+	if (Player)//캐스팅 성공하면
+	{
+		// 이동속도 필요
+		FVector velocity = Player->GetVelocity();
+		//플레이어 전방백터 구학기
+		FVector forwardVector = Player->GetActorForwardVector();
+		//내적으로  speed할당하기 
+		speed = FVector::DotProduct(forwardVector,velocity);
+	}
+	
+}

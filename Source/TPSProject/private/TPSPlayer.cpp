@@ -16,7 +16,7 @@ ATPSPlayer::ATPSPlayer()
 	PrimaryActorTick.bCanEverTick = true;
 	//초기세팅부분
 	//스켈레톤 불러오기
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
 	if (TempMesh.Succeeded()) {
 		GetMesh()->SetSkeletalMesh(TempMesh.Object);// 불러온 매쉬장착 해줌
 

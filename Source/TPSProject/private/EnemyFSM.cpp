@@ -78,7 +78,7 @@ void UEnemyFSM::IdleState()
 		currentTime = 0;
 		
 		
-		me->GetCapsuleComponent()->SetSimulatePhysics(false);
+		
 	}
 }
 
@@ -120,7 +120,7 @@ void UEnemyFSM::AttckState()
 
 
 }
-
+//데미지 입은 상태
 void UEnemyFSM::DamageState()
 {
 	currentTime += GetWorld()->DeltaRealTimeSeconds;
@@ -129,6 +129,7 @@ void UEnemyFSM::DamageState()
 	{
 		mState = EEnemyState::Idel;
 		currentTime = 0;
+		me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	}
 }
 //죽음상태
@@ -145,7 +146,7 @@ void UEnemyFSM::DieState()
 		me->Destroy();//사라진다
 	}
 }
-
+// 대미지 입을때 맞은곳 파라매터
 void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 {
 	hp--;
