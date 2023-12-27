@@ -92,7 +92,9 @@ public:
 
 	//5. 스나이퍼 줌 모드
 
-	void SniperAim();
+	void SniperZoomIn();
+	
+	void SniperZoomOut();
 
 	bool bSniperAim = true;
 
@@ -113,4 +115,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
 	class UParticleSystem* bulletEffectFactory;
+
+
+	// 카메라쉐이크 
+
+	UPROPERTY(EditDefaultsOnly,Category=CameraMotion)
+	TSubclassOf<class UCameraShakeBase> cameraShake;
+
 };

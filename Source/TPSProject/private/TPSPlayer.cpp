@@ -49,7 +49,7 @@ ATPSPlayer::ATPSPlayer()
 	JumpMaxCount = 2;
 
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
-	gunMeshComp->SetupAttachment(GetMesh()); //총을 몸체에 부착
+	gunMeshComp->SetupAttachment(GetMesh(), TEXT("hand_rSoket")); //총을 몸체에 부착
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
 
 	if (TempGunMesh.Succeeded())
@@ -62,14 +62,14 @@ ATPSPlayer::ATPSPlayer()
 	//스나이퍼 매쉬컴포등록
 	sniperMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SniperGunMeshComp"));
 
-	sniperMeshComp->SetupAttachment(GetMesh());
+	sniperMeshComp->SetupAttachment(GetMesh(),TEXT("hand_rSoket"));
 
 
-	//ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/FPWeapon/Mesh/sniper1.sniper1'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempSniperMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/FPWeapon/Mesh/sniper1.sniper1'"));
 
-	if (TempGunMesh.Succeeded())
+	if (TempSniperMesh.Succeeded())
 	{
-		sniperMeshComp->SetSkeletalMesh(TempGunMesh.Object);// 매시 할당하기
+		sniperMeshComp->SetSkeletalMesh(TempSniperMesh.Object);// 매시 할당하기
 
 		sniperMeshComp->SetRelativeLocation(FVector(-22, 55, 120));//위치 조절
 
@@ -135,9 +135,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeSniperGun);
 
 	
-	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperZoomIn);
 	
-	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperZoomOut);
 
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &ATPSPlayer::InputRun);
@@ -147,10 +147,18 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ATPSPlayer::InputFire()
 {
+	//애니메이션 실행
 	 auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 	 anim->PlayAttckAnim();// 받아와서 기능실행
 	
+	 //카메라 쉐이크 실행
 
+	 auto controller = GetWorld()->GetFirstPlayerController();
+	 //만든 카메라 쉐이크 블루프린트를 넣어서 적용
+	 controller->PlayerCameraManager->StartCameraShake(cameraShake);
+
+
+	//총타입따라 생성
 	if (bUseingGrenadeGun) {
 		FTransform firePos = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
 
@@ -268,6 +276,9 @@ void ATPSPlayer::InputRun()
 
 void ATPSPlayer::ChangeGrenadeGun()
 {
+	if (bSniperAim) {
+		return;
+	}
 	bUseingGrenadeGun = true;
 	sniperMeshComp->SetVisibility(false);
 	gunMeshComp->SetVisibility(true);
@@ -281,26 +292,35 @@ void ATPSPlayer::ChangeSniperGun()
 	gunMeshComp->SetVisibility(false);
 }
 
-void ATPSPlayer::SniperAim()
+void ATPSPlayer::SniperZoomOut()
 {
 	if (bUseingGrenadeGun) {
 		return;
 
 	}
-	if (bSniperAim == false)//줌모드
-	{
-		bSniperAim = true; //스나이퍼 에임 상태 변경
-		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
-		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
-		_crosshairUI->RemoveFromParent();
-
-	}
-	else// 줌해제
-	{
-		bSniperAim = false; // 스나이퍼에임 상태 변경
+	if (bSniperAim) {
+		bSniperAim = false;
 		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
 		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
 		_crosshairUI->AddToViewport();
+		
+	}
+}
+
+void ATPSPlayer::SniperZoomIn()
+{
+	if (bUseingGrenadeGun) {
+		return;
 
 	}
+	if (!bSniperAim) {
+		bSniperAim = true;
+		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
+		if (tpsCamComp->IsVisible()) {
+			tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
+		}
+		_crosshairUI->RemoveFromParent();
+		
+	}
+	
 }
