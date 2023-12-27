@@ -34,5 +34,11 @@ public:
 	bool isInAir = false;
 
 
+	//根鸥林 父电巴 持绢拎具窃
+	UPROPERTY(EditDefaultsOnly, Category=Player)
+	class UAnimMontage* attckAnimMontage;
+
+	void PlayAttckAnim();
+
 
 };

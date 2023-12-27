@@ -9,6 +9,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnemyFSM.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include <PlayerAnim.h>
+
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -145,6 +147,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ATPSPlayer::InputFire()
 {
+	 auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
+	 anim->PlayAttckAnim();// 받아와서 기능실행
+	
 
 	if (bUseingGrenadeGun) {
 		FTransform firePos = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));

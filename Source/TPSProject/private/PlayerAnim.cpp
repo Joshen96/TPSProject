@@ -39,3 +39,10 @@ void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 	}
 	
 }
+//공격시 몽타주실행 함수
+void UPlayerAnim::PlayAttckAnim()
+{
+	Montage_Play(attckAnimMontage);
+	//Montage_Play()몽타주 실행 함수 
+
+}
