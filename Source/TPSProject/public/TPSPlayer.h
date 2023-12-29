@@ -56,7 +56,10 @@ public:
 	UPROPERTY(EditDefaultsOnly,Category=BulletFactory)
 	TSubclassOf<class ABullet> bulletFactory;
 
-	
+	//발사 사운드 
+	UPROPERTY(EditDefaultsOnly,Category=Sound)// 아키타입에서 편집가능
+	class USoundBase* bulletsound;
+
 
 	//2. 발사함수
 	void InputFire();
@@ -92,9 +95,9 @@ public:
 
 	//5. 스나이퍼 줌 모드
 
-	void SniperZoomIn();
+	void SniperZoom();
 	
-	void SniperZoomOut();
+	
 
 	bool bSniperAim = true;
 

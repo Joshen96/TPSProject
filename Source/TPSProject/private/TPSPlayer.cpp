@@ -76,6 +76,8 @@ ATPSPlayer::ATPSPlayer()
 		sniperMeshComp->SetRelativeScale3D(FVector(0.15f));//매쉬 크기조정
 	}
 
+	
+	
 }
 
 
@@ -135,9 +137,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeSniperGun);
 
 	
-	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperZoomIn);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperZoom);
 	
-	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperZoomOut);
+	//PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperZoomOut); //버그로 변경
 
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &ATPSPlayer::InputRun);
@@ -157,6 +159,9 @@ void ATPSPlayer::InputFire()
 	 //만든 카메라 쉐이크 블루프린트를 넣어서 적용
 	 controller->PlayerCameraManager->StartCameraShake(cameraShake);
 
+
+	 //사운드 실행
+	 UGameplayStatics::PlaySound2D(GetWorld(), bulletsound);
 
 	//총타입따라 생성
 	if (bUseingGrenadeGun) {
@@ -292,22 +297,22 @@ void ATPSPlayer::ChangeSniperGun()
 	gunMeshComp->SetVisibility(false);
 }
 
-void ATPSPlayer::SniperZoomOut()
-{
-	if (bUseingGrenadeGun) {
-		return;
+//void ATPSPlayer::SniperZoomOut()
+//{
+//	if (bUseingGrenadeGun) {
+//		return;
+//
+//	}
+//	if (bSniperAim) {
+//		bSniperAim = false;
+//		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
+//		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
+//		_crosshairUI->AddToViewport();
+//		
+//	}
+//}
 
-	}
-	if (bSniperAim) {
-		bSniperAim = false;
-		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
-		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
-		_crosshairUI->AddToViewport();
-		
-	}
-}
-
-void ATPSPlayer::SniperZoomIn()
+void ATPSPlayer::SniperZoom()
 {
 	if (bUseingGrenadeGun) {
 		return;
@@ -316,11 +321,17 @@ void ATPSPlayer::SniperZoomIn()
 	if (!bSniperAim) {
 		bSniperAim = true;
 		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
-		if (tpsCamComp->IsVisible()) {
-			tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
-		}
+		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
 		_crosshairUI->RemoveFromParent();
 		
 	}
+	else
+	{
+		bSniperAim = false;
+		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
+		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
+		_crosshairUI->AddToViewport();
+	}
+
 	
 }
