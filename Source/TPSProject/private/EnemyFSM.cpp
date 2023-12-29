@@ -158,7 +158,7 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 
 		me->GetCapsuleComponent()->SetSimulatePhysics(true);
 		
-		FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 200000; // 맞은 표면에 힘의 반대방향으로 힘을 
+		FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 20000; // 맞은 표면에 힘의 반대방향으로 힘을 
 
 		me->GetCapsuleComponent()->AddForce(force);
 	}

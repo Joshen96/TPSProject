@@ -320,8 +320,10 @@ void ATPSPlayer::SniperZoom()
 	}
 	if (!bSniperAim) {
 		bSniperAim = true;
-		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력ㄴ
+		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력
+		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
+		
 		_crosshairUI->RemoveFromParent();
 		
 	}
@@ -329,7 +331,9 @@ void ATPSPlayer::SniperZoom()
 	{
 		bSniperAim = false;
 		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
+		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
+		
 		_crosshairUI->AddToViewport();
 	}
 
