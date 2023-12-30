@@ -72,13 +72,14 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 void UEnemyFSM::IdleState()
 {
+	//me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	currentTime += GetWorld()->DeltaTimeSeconds;
 	if (currentTime > idleDelyTime) {
 		mState = EEnemyState::Move;
 		currentTime = 0;
 		
 		
-		
+		me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	}
 }
 
@@ -129,7 +130,8 @@ void UEnemyFSM::DamageState()
 	{
 		mState = EEnemyState::Idel;
 		currentTime = 0;
-		me->GetCapsuleComponent()->SetSimulatePhysics(false);
+		
+		
 	}
 }
 //죽음상태
@@ -154,18 +156,25 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 
 	if (hp > 0)
 	{
-		mState = EEnemyState::Damage;
+		
+
 
 		me->GetCapsuleComponent()->SetSimulatePhysics(true);
 		
-		FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 20000; // 맞은 표면에 힘의 반대방향으로 힘을 
+		
+		FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
 
 		me->GetCapsuleComponent()->AddForce(force);
+		
+		mState = EEnemyState::Damage;
 	}
 	else
 	{
 		mState = EEnemyState::Die;
-		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		me->GetMesh()->SetSimulatePhysics(true);
+
 	}
 }
 

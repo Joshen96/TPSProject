@@ -200,8 +200,8 @@ void ATPSPlayer::InputFire()
 
 			if (hitComp && hitComp->IsSimulatingPhysics()) //맞은것이 있고 맞은것이 물리적용가능하다면 
 			{
-				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 500000; // 맞은 표면에 힘의 반대방향으로 힘을 
-
+				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
+			
 				hitComp->AddForce(force);
 			}
 
