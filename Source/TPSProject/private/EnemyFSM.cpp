@@ -138,6 +138,7 @@ void UEnemyFSM::DamageState()
 void UEnemyFSM::DieState()
 {
 	//아래로떨어지도록
+	//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	FVector P0 = me->GetActorLocation();
 	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
 	FVector P = P0 + vt;
@@ -157,24 +158,36 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 	if (hp > 0)
 	{
 		
+			mState = EEnemyState::Damage;
+	
+			if (me->GetCapsuleComponent()->GetCollisionEnabled() != ECollisionEnabled::NoCollision)
+			{
+				me->GetCapsuleComponent()->SetSimulatePhysics(true);
+				FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
+			
+				me->GetCapsuleComponent()->AddForce(force);
 
+				UE_LOG(LogTemp, Log, TEXT("vetor: %s"), *force.ToString());
 
-		me->GetCapsuleComponent()->SetSimulatePhysics(true);
+			}
+			
+			
+			
+			
+			
+
+			
 		
 		
-		FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
-
-		me->GetCapsuleComponent()->AddForce(force);
-		
-		mState = EEnemyState::Damage;
 	}
 	else
 	{
 		mState = EEnemyState::Die;
-		//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
+		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);
-
+		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }
 
