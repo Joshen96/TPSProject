@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TPSProject.h"
 #include "Components/CapsuleComponent.h"
+#include "EnemyAnim.h"
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -37,7 +38,7 @@ void UEnemyFSM::BeginPlay()
 
 	mState = EEnemyState::Idel;
 	
-
+	anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
 	
 }
 
@@ -78,7 +79,7 @@ void UEnemyFSM::IdleState()
 		mState = EEnemyState::Move;
 		currentTime = 0;
 		
-		
+		anim->animstate = mState;// move 상태로 변환
 		me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	}
 }
@@ -96,6 +97,11 @@ void UEnemyFSM::MoveState()
 	if (dir.Size() < attackRange)
 	{
 		mState = EEnemyState::Attck;
+		anim->animstate = mState;
+
+		anim->bAttackPlay = true;
+
+		currentTime = attackDelayTime;
 	}
 }
 
@@ -109,6 +115,8 @@ void UEnemyFSM::AttckState()
 
 
 		currentTime = 0;
+
+		anim->bAttackPlay = true;
 	}
 
 
@@ -117,6 +125,7 @@ void UEnemyFSM::AttckState()
 	if (distance > attackRange)
 	{
 		mState = EEnemyState::Move;
+		anim->animstate = mState;
 	}
 
 
@@ -131,6 +140,7 @@ void UEnemyFSM::DamageState()
 		mState = EEnemyState::Idel;
 		currentTime = 0;
 		
+		anim->animstate = mState;
 		
 	}
 }
@@ -142,7 +152,7 @@ void UEnemyFSM::DieState()
 	FVector P0 = me->GetActorLocation();
 	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
 	FVector P = P0 + vt;
-	me->SetActorLocation(P);
+	me->SetActorLocation(P); 
 
 
 	if (P.Z < -200.0f) {
@@ -170,15 +180,7 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 				UE_LOG(LogTemp, Log, TEXT("vetor: %s"), *force.ToString());
 
 			}
-			
-			
-			
-			
-			
 
-			
-		
-		
 	}
 	else
 	{
@@ -189,5 +191,6 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 		me->GetMesh()->SetSimulatePhysics(true);
 		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+	anim->animstate = mState;
 }
 

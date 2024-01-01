@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "EnemyFSM.h" //헤더추가
 
+
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -31,7 +32,8 @@ AEnemy::AEnemy()
 		GetMesh()->SetAnimInstanceClass(tempClass.Class);
 	}
 
-
+	//애니메이션 가져오기
+	
 
 }
 

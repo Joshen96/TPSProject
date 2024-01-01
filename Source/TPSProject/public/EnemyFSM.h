@@ -75,7 +75,7 @@ public:
 	float attackRange = 150.0f;
 
 	//공격 딜레이 시간
-	float attackDelayTime = 2.0f;
+	float attackDelayTime = 3.0f;
 
 
 	//피격알림 이벤트 함수
@@ -92,6 +92,10 @@ public:
 	// 죽음상태 속성 아래로떨어지는 속도
 	UPROPERTY(EditAnywhere, Category=FSM)
 	float diespeed = 50.0f;
+
+	//사용중인 애니메이션 블루프린트 
+	UPROPERTY()
+	class UEnemyAnim* anim;
 
 
 };
