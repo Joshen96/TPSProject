@@ -25,4 +25,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category=FSMEvent)
 	void OnEndAttackAnimation();
+
+	//애니메이션 피격 재생 함수
+	UFUNCTION(BlueprintImplementableEvent, Category = FSMEvent) // 선언없이 블루프린터에서 구현한다는 의미
+	void PlayDamageAnim(FName sectionName);
+
 };

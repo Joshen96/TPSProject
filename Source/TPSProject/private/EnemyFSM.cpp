@@ -80,7 +80,7 @@ void UEnemyFSM::IdleState()
 		currentTime = 0;
 		
 		anim->animstate = mState;// move 상태로 변환
-		me->GetCapsuleComponent()->SetSimulatePhysics(false);
+		
 	}
 }
 
@@ -141,7 +141,7 @@ void UEnemyFSM::DamageState()
 		currentTime = 0;
 		
 		anim->animstate = mState;
-		
+		//me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	}
 }
 //죽음상태
@@ -167,29 +167,40 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 
 	if (hp > 0)
 	{
-		
+		if (mState == EEnemyState::Die) 
+		{
+			return;
+		}
+		else {
 			mState = EEnemyState::Damage;
-	
-			if (me->GetCapsuleComponent()->GetCollisionEnabled() != ECollisionEnabled::NoCollision)
-			{
-				me->GetCapsuleComponent()->SetSimulatePhysics(true);
-				FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
+
+
+
+			//me->GetCapsuleComponent()->SetSimulatePhysics(true);
+			//FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 10000; // 맞은 표면에 힘의 반대방향으로 힘을 
+
+			//me->GetCapsuleComponent()->AddForce(force);
+
+			//UE_LOG(LogTemp, Log, TEXT("vetor: %s"), *force.ToString());
+
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 1);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			anim->PlayDamageAnim(*sectionName);
+		}
 			
-				me->GetCapsuleComponent()->AddForce(force);
-
-				UE_LOG(LogTemp, Log, TEXT("vetor: %s"), *force.ToString());
-
-			}
 
 	}
 	else
 	{
+		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		mState = EEnemyState::Die;
 		
 		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);
-		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
 	}
 	anim->animstate = mState;
 }
