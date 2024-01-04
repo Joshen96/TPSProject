@@ -8,6 +8,13 @@
 #include "TPSProject.h"
 #include "Components/CapsuleComponent.h"
 #include "EnemyAnim.h"
+#include "AIController.h"
+#include "NavigationSystem.h"
+#include <Runtime/AIModule/Classes/AITypes.h>
+#include "Navigation/PathFollowingComponent.h"
+
+
+
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -40,6 +47,7 @@ void UEnemyFSM::BeginPlay()
 	
 	anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
 	
+	ai = Cast<AAIController>(me->GetController());
 }
 
 
@@ -81,6 +89,8 @@ void UEnemyFSM::IdleState()
 		
 		anim->animstate = mState;// move 상태로 변환
 		
+
+		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos); 
 	}
 }
 
@@ -92,10 +102,39 @@ void UEnemyFSM::MoveState()
 	//2.방향 필요  =  목적지 - 내위치 = 방향
 	FVector dir = destination - me->GetActorLocation();
 	//3.방향으로 이동
-	me->AddMovementInput(dir.GetSafeNormal());
+	//me->AddMovementInput(dir.GetSafeNormal());
+	//ai->MoveToLocation(destination);
+	auto ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
+
+	FPathFindingQuery query;
+	FAIMoveRequest req;
+
+	req.SetAcceptanceRadius(3);
+	req.SetGoalLocation(destination);
+
+	ai->BuildPathfindingQuery(req, query);
+
+	FPathFindingResult r = ns->FindPathSync(query);
+
+	if (r.Result == ENavigationQueryResult::Success)
+	{
+		ai->MoveToLocation(destination);
+	}
+	else
+	{
+		auto result = ai->MoveToLocation(randomPos);
+
+		if (result == EPathFollowingRequestResult::AlreadyAtGoal) {
+			GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
+		}
+	}
+
 
 	if (dir.Size() < attackRange)
 	{
+
+		ai->StopMovement();
+
 		mState = EEnemyState::Attck;
 		anim->animstate = mState;
 
@@ -112,20 +151,22 @@ void UEnemyFSM::AttckState()
 
 	if (currentTime > attackDelayTime) {
 		PRINT_LOG(TEXT("Attack!!"));
-
+		
 
 		currentTime = 0;
-
+		
 		anim->bAttackPlay = true;
 	}
-
+	
 
 	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());
 
-	if (distance > attackRange)
+	if (distance > attackedRange )
 	{
+		
 		mState = EEnemyState::Move;
 		anim->animstate = mState;
+		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
 	}
 
 
@@ -163,7 +204,7 @@ void UEnemyFSM::DieState()
 void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 {
 	hp--;
-	
+	ai->StopMovement();
 
 	if (hp > 0)
 	{
@@ -203,5 +244,16 @@ void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
 		
 	}
 	anim->animstate = mState;
+}
+
+bool UEnemyFSM::GetRandomPositionInNavMesh(FVector centerLocation, float radius, FVector& dest)
+{
+
+	auto ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
+	FNavLocation loc;
+	bool result = ns->GetRandomReachablePointInRadius(centerLocation, radius, loc);
+	dest = loc.Location;
+
+	return result;
 }
 

@@ -74,6 +74,12 @@ public:
 	UPROPERTY(EditAnywhere, Category=FSM)
 	float attackRange = 150.0f;
 
+
+
+	UPROPERTY(EditAnywhere, Category=FSM)
+	float attackedRange = 10000.0f;
+
+
 	//공격 딜레이 시간
 	float attackDelayTime = 3.0f;
 
@@ -97,5 +103,12 @@ public:
 	UPROPERTY()
 	class UEnemyAnim* anim;
 
+	UPROPERTY(EditAnywhere, Category = FSM)
+	class AAIController* ai;
 
+	//ai패트롤 기능
+	FVector randomPos;
+
+	bool GetRandomPositionInNavMesh(FVector centerLocation, float radius, FVector& dest);
+	
 };
