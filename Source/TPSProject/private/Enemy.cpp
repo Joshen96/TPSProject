@@ -33,6 +33,11 @@ AEnemy::AEnemy()
 	}
 
 	//애니메이션 가져오기
+
+
+	//AI컨트롤러 소유 자동할당
+
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
 
 }
