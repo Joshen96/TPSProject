@@ -50,8 +50,8 @@ void UPlayerMove::SetupInputBinding(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &UPlayerMove::InputJump);
 
 	//키보드 런 바인딩 액션 
-	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &UPlayerMove::InputJump);
-	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &UPlayerMove::InputJump);
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &UPlayerMove::InputRun);
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &UPlayerMove::InputRun);
 
 	
 }

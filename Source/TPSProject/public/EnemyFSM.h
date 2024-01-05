@@ -77,7 +77,7 @@ public:
 
 
 	UPROPERTY(EditAnywhere, Category=FSM)
-	float attackedRange = 10000.0f;
+	float attackedRange = 500.0f;
 
 
 	//공격 딜레이 시간

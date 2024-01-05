@@ -29,6 +29,6 @@ public:
 
 public:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=FSMComponent)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=FSMComponent)
 	class UEnemyFSM* fsm; //컴포넌트 단독사용 불가로 에너미에 부착하여 사용하기위함
 };
