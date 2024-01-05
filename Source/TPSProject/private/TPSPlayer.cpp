@@ -10,6 +10,7 @@
 #include "EnemyFSM.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include <PlayerAnim.h>
+#include "PlayerMove.h"
 
 
 // Sets default values
@@ -18,6 +19,10 @@ ATPSPlayer::ATPSPlayer()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	//초기세팅부분
+	// 무브 컴포넌트
+	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
+	
+	 
 	//스켈레톤 불러오기
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
 	if (TempMesh.Succeeded()) {
@@ -86,8 +91,8 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//초기 속도 걷기로 세팅
-	GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
+	//초기 속도 걷기로 세팅 //컴포넌트 이동으로 삭제
+	//GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 
 
 	//스나이퍼 위젯설정
@@ -111,8 +116,8 @@ void ATPSPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
-	Move();
+	// 움직임 컴포넌트로 이동
+	//Move();
 
 }
 
@@ -120,15 +125,23 @@ void ATPSPlayer::Tick(float DeltaTime)
 void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	//컴포넌트 에서 입력 바인딩 처리하도록 하기
+	playerMove->SetupInputBinding(PlayerInputComponent);
+
+
+
+
+
+
 	//입력 매핑하기
+	//카메라 움직임 컴포넌트를 만들어 따로 동작하도록 변경
+	//PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
+	//PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
 
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
-	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
-
-	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
-	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
-	//바인딩 액션은 IE_Pressed 처럼 눌러졌을때를 정해줘야함
-	PlayerInputComponent->BindAction(TEXT("Jump"),IE_Pressed, this, &ATPSPlayer::InputJump);
+	//PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
+	//PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
+	////바인딩 액션은 IE_Pressed 처럼 눌러졌을때를 정해줘야함
+	//PlayerInputComponent->BindAction(TEXT("Jump"),IE_Pressed, this, &ATPSPlayer::InputJump);
 	
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
 
@@ -141,8 +154,7 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	
 	//PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperZoomOut); //버그로 변경
 
-	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
-	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &ATPSPlayer::InputRun);
+	
 
 
 }
@@ -220,64 +232,9 @@ void ATPSPlayer::InputFire()
 	}
 }
 
-void ATPSPlayer::Turn(float value)
-{
-	AddControllerYawInput(value); //요회전으로 입력값 적용
-}
 
-void ATPSPlayer::LookUp(float value)
-{
-	AddControllerPitchInput(value); //피치값으로 입력값 적용
-}
 
-void ATPSPlayer::InputHorizontal(float value)
-{
-	dir.Y = value;
-}
 
-void ATPSPlayer::InputVertical(float value)
-{
-	dir.X = value;
-}
-
-void ATPSPlayer::InputJump()
-{
-	Jump();
-}
-
-void ATPSPlayer::Move()
-{
-	dir = FTransform(GetControlRotation()).TransformVector(dir); //절대좌표를 상대좌표 방향으로 바꿔줌
-	// 실제 이동
-	// 현재위치 + 방향 * 속도 * 시간 =  결과위치
-	/*FVector P;
-
-	FVector NowL = GetActorLocation();
-
-	FVector vt = dir * moveSpeed * DeltaTime;
-
-	P = vt + NowL;
-
-	SetActorLocation(P);*/
-	// 대체하기
-	AddMovementInput(dir);
-
-	dir = FVector::ZeroVector;
-}
-
-void ATPSPlayer::InputRun()
-{
-	auto movement = GetCharacterMovement();
-
-	if (movement->MaxWalkSpeed > walkSpeed)
-	{
-		movement->MaxWalkSpeed = walkSpeed;
-	}
-	else
-	{
-		movement->MaxWalkSpeed = runSpeed;
-	}
-}
 
 void ATPSPlayer::ChangeGrenadeGun()
 {

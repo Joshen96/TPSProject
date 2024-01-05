@@ -43,12 +43,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 	class USkeletalMeshComponent* sniperMeshComp;
 
-	//걷기 속도
-	UPROPERTY(EditAnywhere,Category=PlayerSetting)
-	float walkSpeed = 200;
-	//뛰기 속도
-	UPROPERTY(EditAnywhere,Category=PlayerSetting)
-	float runSpeed = 500;
+	
 
 	//총발사 구현부분
 
@@ -64,24 +59,13 @@ public:
 	//2. 발사함수
 	void InputFire();
 
+	//무브 컴포넌트 부착
 
+	UPROPERTY(VisibleAnywhere, Category = Component)
+	class UPlayerBaseComponent* playerMove;
 
 	//3. 이동 부분
-	void Turn(float value);
 
-	void LookUp(float value);
-
-	void InputHorizontal(float value);
-
-	void InputVertical(float value);
-
-	void InputJump();
-
-	void Move();
-	
-	void InputRun();
-
-	FVector dir;
 
 	
 
