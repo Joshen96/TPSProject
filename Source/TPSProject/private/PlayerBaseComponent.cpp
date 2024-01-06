@@ -14,15 +14,25 @@
 //}
 
 
+void UPlayerBaseComponent::InitializeComponent()
+{
+
+	me = Cast<ATPSPlayer>(GetOwner()); // 캐스트 이컴포넌트가 달린 것에서 캐스트
+
+	moveComp = me->GetCharacterMovement(); // 무브컴포넌트 할당
+
+	//여기서 플레이어 본체에 있는 델리게이트 바인딩
+
+	//me->onInputBindingDelegate.AddUObject()
+	me->onInputBindingDelegate.AddUObject(this, &UPlayerBaseComponent::SetupInputBinding);
+
+}
+
 // Called when the game starts
 void UPlayerBaseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	me = Cast<ATPSPlayer>(GetOwner()); // 캐스트 이컴포넌트가 달린 것에서 캐스트
-
-	moveComp = me->GetCharacterMovement(); // 무브컴포넌트 할당
-	// ...
 	
 }
 

@@ -19,7 +19,7 @@ ATPSPlayer::ATPSPlayer()
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
 
-	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
+	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 
 	
 	 
@@ -85,6 +85,16 @@ ATPSPlayer::ATPSPlayer()
 	
 }
 
+//void ATPSPlayer::TestFunc(FName name)
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("TestFunc Call : %s"), *name.ToString());
+//}
+//
+//void ATPSPlayer::TestFunc2(FName name)
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("MultiFunc Call : %s"), *name.ToString());
+//}
+
 
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay()
@@ -97,12 +107,39 @@ void ATPSPlayer::BeginPlay()
 
 	//스나이퍼 위젯설정
 
+	//델리게이트에 바인드
 
+	//myVar.BindUObject(this, &ATPSPlayer::TestFunc);
+
+//	myMVar.AddUObject(this, &ATPSPlayer::TestFunc);
+	//myMVar.AddUObject(this, &ATPSPlayer::TestFunc2);
+
+
+	//FTimerHandle timer;
+
+	//GetWorld()->GetTimerManager().SetTimer(timer, this, &ATPSPlayer::PlayDelegate, 2);
 	
 
 
 }
 
+//void  ATPSPlayer::PlayDelegate()
+//{
+//	int c = FMath::RandRange(1, 3);
+//
+//	if (c == 1)
+//	{
+//		myVar.ExecuteIfBound(TEXT("first"));
+//	}
+//	else if (c == 2)
+//	{
+//		myMVar.Broadcast(TEXT("second"));
+//	}
+//	else
+//	{
+//		myMVar.Broadcast(TEXT("SSS"));
+//	}
+//}
 // Called every frame
 void ATPSPlayer::Tick(float DeltaTime)
 {
@@ -118,8 +155,10 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	//컴포넌트 에서 입력 바인딩 처리하도록 하기
-	playerMove->SetupInputBinding(PlayerInputComponent);
-	playerFire->SetupInputBinding(PlayerInputComponent);
+
+	onInputBindingDelegate.Broadcast(PlayerInputComponent);
+	//playerMove->SetupInputBinding(PlayerInputComponent);
+//	playerFire->SetupInputBinding(PlayerInputComponent);
 
 
 

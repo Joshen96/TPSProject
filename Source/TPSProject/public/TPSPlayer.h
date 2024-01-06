@@ -6,6 +6,13 @@
 #include "GameFramework/Character.h"
 #include "TPSPlayer.generated.h"
 
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FInputBindingDelegate,class UInputComponent*); // 멀티캐스트용 입력컴포넌트를 받는 델리게이트
+
+
+
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyDelegate1, FName, name)
+
 UCLASS()
 class TPSPROJECT_API ATPSPlayer : public ACharacter
 {
@@ -14,7 +21,14 @@ class TPSPROJECT_API ATPSPlayer : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ATPSPlayer();
+	//FMyDelegate1 myVar;
+	//FMyDelegate2 myMVar;
+	FInputBindingDelegate onInputBindingDelegate;
 
+
+	//void TestFunc(FName name);
+	//void TestFunc2(FName name);
+	//void PlayDelegate();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -19,7 +19,10 @@ public:
 	// Sets default values for this component's properties
 	UPlayerBaseComponent() {
 		PrimaryComponentTick.bCanEverTick = false; // 틱비활성화
+		bWantsInitializeComponent = true; // BeginPlay보다 먼저 실행되는 초기화컴포넌트 호출되도록 설정
 	};
+
+	virtual void InitializeComponent() override;
 
 
 	// Called when the game starts
