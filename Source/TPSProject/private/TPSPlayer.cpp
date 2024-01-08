@@ -6,6 +6,9 @@
 #include "Camera/CameraComponent.h"
 #include "PlayerMove.h" //이동컴포넌트
 #include "PlayerFire.h" //공격 컴포넌트
+#include "Components/CapsuleComponent.h"
+#include "TPSProject.h"
+#include "Enemy.h" //애너미 공격 받기위해
 
 
 // Sets default values
@@ -31,8 +34,8 @@ ATPSPlayer::ATPSPlayer()
 		//매시위치 조정하기
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, -90, 0));
 	}
-
-
+	
+	
 	// 카메라암 붙히기 선언한 카메라암세팅
 	springArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	springArmComp->SetupAttachment(RootComponent); //상위 루트에 붙히고
@@ -101,6 +104,16 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//초기 체력 설정
+
+	hp = initiaHp;
+
+	
+	
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ATPSPlayer::OnEnemyKickOverlap); //적공격 델리게이트 탑재
+
+
+
 	//초기 속도 걷기로 세팅 //컴포넌트 이동으로 삭제
 	//GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 
@@ -163,4 +176,37 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 
 
+}
+
+
+
+
+void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
+
+	AEnemy* enemy = Cast<AEnemy>(OtherActor);
+
+	
+
+	if (enemy != nullptr)
+	{
+	
+			onHitEvent();
+		
+	}
+
+}
+
+void ATPSPlayer::onHitEvent()
+{
+	PRINT_LOG(TEXT("Damaged!!!!"));
+
+
+	hp--;
+
+	if (hp <= 0)
+	{
+		PRINT_LOG(TEXT("player Dead"));
+	}
 }

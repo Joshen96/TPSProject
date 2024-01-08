@@ -149,8 +149,10 @@ void UEnemyFSM::AttckState()
 	//시간을 주어 공격 딜레이
 	currentTime += GetWorld()->DeltaTimeSeconds;
 
+
+
 	if (currentTime > attackDelayTime) {
-		PRINT_LOG(TEXT("Attack!!"));
+		//PRINT_LOG(TEXT("Attack!!"));
 		
 
 		currentTime = 0;

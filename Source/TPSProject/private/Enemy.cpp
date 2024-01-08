@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "EnemyFSM.h" //헤더추가
+#include "Components/SphereComponent.h"
 
 
 // Sets default values
@@ -20,7 +21,16 @@ AEnemy::AEnemy()
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -88), FRotator(0, -90, 0));
 
 		GetMesh()->SetRelativeScale3D(FVector(0.84f));
+
 	}
+
+	kick = CreateDefaultSubobject<USphereComponent>(TEXT("kickcollision"));
+
+	kick->SetupAttachment(GetMesh(), TEXT("kick_Pos"));
+
+
+	
+	kick->SetCollisionProfileName(TEXT("EnemyKick"));
 
 	fsm = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
 	//애너미 애님블루프린트 할당하기
