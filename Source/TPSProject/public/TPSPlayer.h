@@ -102,6 +102,8 @@ public:
 	void OnUsingGrenade(bool isGrenade);
 
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Health)
+	void OnUsingGrenade(int32 aaa);
 
 	
 
