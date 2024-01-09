@@ -92,6 +92,15 @@ public:
 	void OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 
+	//게임오버 함수
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
+	void OnGameOver();
+
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Health)
+	void OnUsingGrenade(bool isGrenade);
+
 
 
 	

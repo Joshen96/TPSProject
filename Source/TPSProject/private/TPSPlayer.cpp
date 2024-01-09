@@ -9,6 +9,7 @@
 #include "Components/CapsuleComponent.h"
 #include "TPSProject.h"
 #include "Enemy.h" //애너미 공격 받기위해
+#include "Kismet/GameplayStatics.h" //일시정지 위함
 
 
 // Sets default values
@@ -198,6 +199,18 @@ void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 }
 
+
+
+
+
+
+
+void ATPSPlayer::OnGameOver_Implementation()
+{
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+}
+
 void ATPSPlayer::onHitEvent()
 {
 	PRINT_LOG(TEXT("Damaged!!!!"));
@@ -208,5 +221,6 @@ void ATPSPlayer::onHitEvent()
 	if (hp <= 0)
 	{
 		PRINT_LOG(TEXT("player Dead"));
+		OnGameOver();
 	}
 }
