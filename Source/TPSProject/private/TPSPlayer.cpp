@@ -23,7 +23,7 @@ ATPSPlayer::ATPSPlayer()
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
 
-	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
+	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 
 	
 	 
