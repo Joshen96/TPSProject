@@ -113,7 +113,11 @@ void ATPSPlayer::BeginPlay()
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ATPSPlayer::OnEnemyKickOverlap); //적공격 델리게이트 탑재
 
+	// 무브 컴포넌트
+	//playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
+	// 사용할 공격 컴포넌트 할당
 
+	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 
 	//초기 속도 걷기로 세팅 //컴포넌트 이동으로 삭제
 	//GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
