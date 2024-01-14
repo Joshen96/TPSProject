@@ -48,6 +48,8 @@ public:
 
 
 	//함수 부분
+	
+	
 	void InputFire();
 
 	void ChangeGrenadeGun();
@@ -57,6 +59,7 @@ public:
 	void SniperZoom();
 
 	//bool 부분
+	
 	bool bUseingGrenadeGun = false;
 
 	bool bSniperAim = true;

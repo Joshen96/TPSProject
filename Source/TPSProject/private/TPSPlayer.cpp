@@ -65,7 +65,7 @@ ATPSPlayer::ATPSPlayer()
 	{
 		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
 
-		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
+		gunMeshComp->SetRelativeLocation(FVector(-14, 55, 120));
 	}
 
 	//스나이퍼 매쉬컴포등록
