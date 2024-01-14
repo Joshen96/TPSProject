@@ -32,8 +32,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=FSMComponent)
 	class UEnemyFSM* fsm; //컴포넌트 단독사용 불가로 에너미에 부착하여 사용하기위함
 
+
 	
 	UPROPERTY(VisibleAnywhere, Category = kick)
 	class USphereComponent* kick;
+
+	//UFUNCTION()
+	//void OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

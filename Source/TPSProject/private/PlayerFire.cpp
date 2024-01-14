@@ -123,7 +123,7 @@ void UPlayerFire::InputFire()
 			if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 
-				enemyFSM->OnDamageProcess(hitInfo);
+				enemyFSM->OnDamageProcess();
 
 
 			}

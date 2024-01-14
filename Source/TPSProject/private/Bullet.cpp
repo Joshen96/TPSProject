@@ -4,6 +4,9 @@
 #include "Bullet.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "EnemyFSM.h"
+#include "Enemy.h"
+
 // Sets default values
 ABullet::ABullet()
 {
@@ -63,6 +66,8 @@ void ABullet::BeginPlay()
 	//시간관리 싱글톤 으로 몇초후 처리하는방법
 	FTimerHandle deathTimer;
 	GetWorld()->GetTimerManager().SetTimer(deathTimer, this, &ABullet::Die, 2.0f, false);
+
+	collisionComp->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnEnemyTouch); // 행동할 함수 델리게이트 탑재
 	
 	
 }
@@ -87,4 +92,27 @@ void ABullet::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent
 		movementComp->MaxSpeed = speed;
 	}
 }
+
+
+
+void ABullet::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+	auto enemy = OtherActor->GetDefaultSubobjectByName(TEXT("FSM"));
+
+	if (enemy) {
+		auto enemyFSM = Cast<UEnemyFSM>(enemy);
+
+		enemyFSM->OnDamageProcess();
+		UE_LOG(LogTemp, Warning, TEXT("touch"));
+
+
+	}
+
+	
+}
+
+
+
+
 

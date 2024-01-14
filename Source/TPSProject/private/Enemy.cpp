@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "EnemyFSM.h" //헤더추가
 #include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 
 // Sets default values
@@ -23,12 +25,13 @@ AEnemy::AEnemy()
 		GetMesh()->SetRelativeScale3D(FVector(0.84f));
 
 	}
+	
 
 	kick = CreateDefaultSubobject<USphereComponent>(TEXT("kickcollision"));
 
 	kick->SetupAttachment(GetMesh(), TEXT("kick_Pos"));
-
-
+	
+	
 	
 	kick->SetCollisionProfileName(TEXT("EnemyKick"));
 
@@ -56,6 +59,7 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 

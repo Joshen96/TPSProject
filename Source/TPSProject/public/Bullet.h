@@ -47,4 +47,12 @@ public:
 	float speed = 5000;
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+
+
+	//충돌콜리젼 구현
+	
+	UFUNCTION()
+	void OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
 };

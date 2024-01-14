@@ -203,7 +203,7 @@ void UEnemyFSM::DieState()
 	}
 }
 // 대미지 입을때 맞은곳 파라매터
-void UEnemyFSM::OnDamageProcess(FHitResult _hitInfo)
+void UEnemyFSM::OnDamageProcess()
 {
 	hp--;
 	ai->StopMovement();
