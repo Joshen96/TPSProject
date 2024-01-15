@@ -77,3 +77,10 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AEnemy::kickDeActive()
+{
+	kick->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+
+

@@ -192,10 +192,14 @@ void UEnemyFSM::DieState()
 {
 	//아래로떨어지도록
 	//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
 	FVector P0 = me->GetActorLocation();
 	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
+
+	me->kickDeActive();
+	
 
 
 	if (P.Z < -200.0f) {

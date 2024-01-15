@@ -20,6 +20,18 @@ UPlayerFire::UPlayerFire()
 	{
 		bulletsound = tempSound.Object;  //선언해둔 총알 사운드에 넣어줌
 	}
+
+
+	
+	
+	
+
+
+	ConstructorHelpers::FObjectFinder<UUserWidget>tempSniperUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_SniperUI.WBP_SniperUI'"));
+	sniperUIFactory = tempSniperUI.Object;
+
+	ConstructorHelpers::FObjectFinder<UUserWidget>tempcrosshairUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_Crosshair.WBP_Crosshair'"));
+	crosshairUIFactory = tempcrosshairUI.Object;
 }
 
 void UPlayerFire::BeginPlay()
@@ -30,9 +42,9 @@ void UPlayerFire::BeginPlay()
 	sniperMeshComp = me->sniperMeshComp;
 
 	//스나이퍼 위젯설정
-	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
+	_sniperUI =  sniperUIFactory;// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
 
-	_crosshairUI = CreateWidget(GetWorld(), crosshairUIFactory);
+	_crosshairUI = crosshairUIFactory;
 
 
 	ChangeSniperGun();// 시작 스나이퍼로시작

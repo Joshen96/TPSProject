@@ -24,7 +24,7 @@ ATPSPlayer::ATPSPlayer()
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
 
-	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
+	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire3"));//생성자 버그때매 블프구현
 
 	
 	ObjectPool = CreateDefaultSubobject<UObjectPools>(TEXT("OBJPool"));

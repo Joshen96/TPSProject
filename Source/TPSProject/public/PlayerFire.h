@@ -68,11 +68,11 @@ public:
 
 	//스나이퍼 줌 UI관련 
 	UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	TSubclassOf<class UUserWidget> sniperUIFactory;
+	class UUserWidget* sniperUIFactory;
 
 	//기본 크로스헤어 ui 관련
 	UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	TSubclassOf<class UUserWidget> crosshairUIFactory;
+	class UUserWidget* crosshairUIFactory;
 
 
 
