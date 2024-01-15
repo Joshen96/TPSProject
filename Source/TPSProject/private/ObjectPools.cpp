@@ -49,7 +49,7 @@ APooledObjects* UObjectPools::SpawnPooledObject()
 			
 			SpawnedPoolIndexes.Add(PoolableActor->GetPoolIndex());
 			
-			auto Bulletspeed = Cast<UProjectileMovementComponent>(PoolableActor);
+			//auto Bulletspeed = Cast<UProjectileMovementComponent>(PoolableActor);
 			
 			//Bulletspeed->SimulationEnabled(true);
 			//auto BulletActive = Cast<UProjectileMovementComponent>(Bulletspeed);
@@ -78,7 +78,7 @@ APooledObjects* UObjectPools::SpawnPooledObject()
 			SpawnedPoolIndexes.Add(PoolableActor->GetPoolIndex());
 			auto Bulletspeed = Cast<ABullet_OP>(PoolableActor);
 
-			Bulletspeed->SimulationEnabled(true);
+			//Bulletspeed->SimulationEnabled(true);
 
 
 			return PoolableActor;

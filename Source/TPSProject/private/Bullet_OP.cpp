@@ -39,21 +39,21 @@ ABullet_OP::ABullet_OP()
 
 
 	//발사체 컴포넌트
-	movementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComp"));
+	//movementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComp"));
 	//1. movement 컴포넌트가 갱신시킬 컴포넌트 지정
 
-	movementComp->SetUpdatedComponent(collisionComp);
+	//movementComp->SetUpdatedComponent(collisionComp);
 	//2. 초기속도
-	movementComp->InitialSpeed = 5000;
+	//movementComp->InitialSpeed = 5000;
 
 	//3. 최대속도
-	movementComp->MaxSpeed = 5000;
+	//movementComp->MaxSpeed = 5000;
 
 	//4 반동여부
-	movementComp->bShouldBounce = true;//반동
+	//movementComp->bShouldBounce = true;//반동
 
 	//5. 반동값
-	movementComp->Bounciness = 0.3f;
+	//movementComp->Bounciness = 0.3f;
 
 	//InitialLifeSpan = 2.0f; // 생명주기
 
@@ -75,6 +75,7 @@ void ABullet_OP::BeginPlay()
 void ABullet_OP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	FrontShot(DeltaTime);
 }
 
 void ABullet_OP::Die()
@@ -82,15 +83,17 @@ void ABullet_OP::Die()
 	Destroy();
 }
 
-void ABullet_OP::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	if (PropertyChangedEvent.GetPropertyName() == TEXT("speed"))
-	{
-		movementComp->InitialSpeed = speed;
-		movementComp->MaxSpeed = speed;
-	}
 
-}
+
+//void ABullet_OP::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+//{
+//	if (PropertyChangedEvent.GetPropertyName() == TEXT("speed"))
+//	{
+//		movementComp->InitialSpeed = speed;
+//		movementComp->MaxSpeed = speed;
+//	}
+//
+//}
 
 void ABullet_OP::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -107,17 +110,24 @@ void ABullet_OP::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* 
 	}
 }
 
-
-
-void ABullet_OP::SimulationEnabled(bool type)
+void ABullet_OP::FrontShot(float DeltaTime)
 {
-	movementComp->bSimulationEnabled = type;
+	FVector newLocation = GetActorLocation() + GetActorForwardVector() * speed * DeltaTime;
+
+	SetActorLocation(newLocation);
 }
 
-void ABullet_OP::Deactivate()
-{
-	Super::Deactivate();
-	SimulationEnabled(false);
 
-}
+
+//void ABullet_OP::SimulationEnabled(bool type)
+//{
+//	movementComp->bSimulationEnabled = type;
+//}
+//
+//void ABullet_OP::Deactivate()
+//{
+//	Super::Deactivate();
+//	SimulationEnabled(false);
+//
+//}
 

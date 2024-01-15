@@ -49,7 +49,7 @@ public:
 
 	//함수 부분
 	
-	
+	UFUNCTION(BlueprintCallable)
 	void InputFire();
 
 	void ChangeGrenadeGun();
@@ -83,7 +83,8 @@ public:
 	//여기서 사용할 크로스헤어 유아이 인스턴스
 	class UUserWidget* _crosshairUI;
 
-
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
+	void OnShotBullet();
 
 
 	//스나이퍼 총알 파티클

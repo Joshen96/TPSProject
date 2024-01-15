@@ -85,7 +85,7 @@ void UPlayerFire::InputFire()
 
 		//me->ObjectPool->SpawnPooledObject()->SetActorLocation(FVector::ZeroVector);
 
-
+		me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePos);
 
 
 	}
@@ -182,4 +182,9 @@ void UPlayerFire::SniperZoom()
 		_crosshairUI->RemoveFromParent();
 
 	}
+}
+
+void UPlayerFire::OnShotBullet_Implementation()
+{
+
 }

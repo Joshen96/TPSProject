@@ -30,8 +30,8 @@ public:
 
 public:
 	//발사체 물리이동 컴포넌트
-	UPROPERTY(VisibleAnywhere, Category = Movement)
-	class UProjectileMovementComponent* movementComp;
+	//UPROPERTY(VisibleAnywhere, Category = Movement)
+	//class UProjectileMovementComponent* movementComp;
 
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 	//구 콜리션 컴포넌트
@@ -51,7 +51,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float speed = 5000;
 
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	//virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 
 	//충돌콜리젼 구현
@@ -59,8 +59,12 @@ public:
 	UFUNCTION()
 	void OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	void SimulationEnabled(bool type);
+	//총알 발사체 없애고 전방이동
+	UFUNCTION()
+	void FrontShot(float DeltaTime);
+
+	//void SimulationEnabled(bool type);
 	
-	void Deactivate() override;
+	//void Deactivate() override;
 	
 };
