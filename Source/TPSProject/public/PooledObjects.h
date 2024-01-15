@@ -19,8 +19,11 @@ public:
 
 	FOnPooledObjectDespawn OnPooledObjectDespawn;
 
+
+
 	UFUNCTION(BlueprintCallable, Category = PooledObject)
-	void Deactivate();
+	
+	virtual	void Deactivate();
 
 	void SetActive(bool IsActive);
 	void SetLifeSpan(float LifeTime);

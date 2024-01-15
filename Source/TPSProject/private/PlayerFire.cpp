@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include <PlayerAnim.h>
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ObjectPools.h"
 
 
 UPlayerFire::UPlayerFire()
@@ -79,7 +80,13 @@ void UPlayerFire::InputFire()
 	if (bUseingGrenadeGun) {
 		FTransform firePos = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
 
-		GetWorld()->SpawnActor<ABullet>(bulletFactory, firePos);
+		//GetWorld()->SpawnActor<AActor>(bulletFactory, firePos);
+		//오브젝트풀링으로 발사하기
+
+		//me->ObjectPool->SpawnPooledObject()->SetActorLocation(FVector::ZeroVector);
+
+
+
 
 	}
 	else

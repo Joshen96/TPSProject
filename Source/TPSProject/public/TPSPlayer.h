@@ -52,7 +52,7 @@ public:
 
 	//총매쉬 
 
-	UPROPERTY(VisibleAnywhere, Category=GunMesh)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=GunMesh)
 	class USkeletalMeshComponent* gunMeshComp;
 
 	//스나이퍼 총 매쉬
@@ -91,6 +91,9 @@ public:
 	UFUNCTION()
 	void OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	//오브젝트 풀링 탑재
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = OBJPool)
+	class UObjectPools* ObjectPool;
 
 	//게임오버 함수
 

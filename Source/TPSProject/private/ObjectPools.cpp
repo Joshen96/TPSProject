@@ -2,7 +2,8 @@
 
 
 #include "ObjectPools.h"
-
+#include "Bullet_OP.h"
+#include <GameFramework/ProjectileMovementComponent.h>
 // Sets default values for this component's properties
 UObjectPools::UObjectPools()
 {
@@ -45,8 +46,18 @@ APooledObjects* UObjectPools::SpawnPooledObject()
 			PoolableActor->TeleportTo(FVector(0, 0, 0), FRotator(0, 0, 0));
 			PoolableActor->SetLifeSpan(PooledObjectLifeSpan);
 			PoolableActor->SetActive(true);
+			
 			SpawnedPoolIndexes.Add(PoolableActor->GetPoolIndex());
+			
+			auto Bulletspeed = Cast<UProjectileMovementComponent>(PoolableActor);
+			
+			//Bulletspeed->SimulationEnabled(true);
+			//auto BulletActive = Cast<UProjectileMovementComponent>(Bulletspeed);
 
+			//Bulletspeed->bAutoActivate = true;
+			//auto Bulletprojectile = Cast<UProjectileMovementComponent>(Bulletspeed);
+			//Bulletprojectile->bSimulationEnabled = true;
+			
 			return PoolableActor;
 
 		}
@@ -65,6 +76,10 @@ APooledObjects* UObjectPools::SpawnPooledObject()
 			PoolableActor->SetLifeSpan(PooledObjectLifeSpan);
 			PoolableActor->SetActive(true);
 			SpawnedPoolIndexes.Add(PoolableActor->GetPoolIndex());
+			auto Bulletspeed = Cast<ABullet_OP>(PoolableActor);
+
+			Bulletspeed->SimulationEnabled(true);
+
 
 			return PoolableActor;
 		}

@@ -3,25 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Bullet.generated.h"
+#include "PooledObjects.h"
+#include "Bullet_OP.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class TPSPROJECT_API ABullet : public AActor
+class TPSPROJECT_API ABullet_OP : public APooledObjects
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	// Sets default values for this actor's properties
-	ABullet();
+	ABullet_OP();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 
 
 public:
@@ -29,30 +33,34 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Movement)
 	class UProjectileMovementComponent* movementComp;
 
-	UPROPERTY(VisibleAnywhere,Category = Collision)
+	UPROPERTY(VisibleAnywhere, Category = Collision)
 	//구 콜리션 컴포넌트
 	class USphereComponent* collisionComp;
 
 	//발사체 매쉬컴포넌트
-	UPROPERTY(VisibleAnywhere,Category = BodyMesh)
+	UPROPERTY(VisibleAnywhere, Category = BodyMesh)
 	class UStaticMeshComponent* bodyMeshComp;
 
 	void Die();
-	
-	
 
 
+	
+	UPROPERTY(EditAnywhere, Category = Settings)
+	float LifeTime = 0;
 	//총알 속도
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float speed = 5000;
-	
+
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 
 	//충돌콜리젼 구현
-	
+
 	UFUNCTION()
 	void OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-
+	void SimulationEnabled(bool type);
+	
+	void Deactivate() override;
+	
 };

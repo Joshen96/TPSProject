@@ -10,6 +10,7 @@
 #include "TPSProject.h"
 #include "Enemy.h" //애너미 공격 받기위해
 #include "Kismet/GameplayStatics.h" //일시정지 위함
+#include "ObjectPools.h"
 
 
 // Sets default values
@@ -26,6 +27,7 @@ ATPSPlayer::ATPSPlayer()
 	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 
 	
+	ObjectPool = CreateDefaultSubobject<UObjectPools>(TEXT("OBJPool"));
 	 
 	//스켈레톤 불러오기
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
