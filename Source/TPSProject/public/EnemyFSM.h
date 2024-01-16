@@ -114,5 +114,9 @@ public:
 	FVector randomPos;
 
 	bool GetRandomPositionInNavMesh(FVector centerLocation, float radius, FVector& dest);
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
+	void DamageWidget();
 	
 };

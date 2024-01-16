@@ -216,7 +216,7 @@ void UEnemyFSM::OnDamageProcess()
 {
 	currntHp--;
 	ai->StopMovement();
-
+	//DamageWidget();
 	if (currntHp > 0)
 	{
 		if (mState == EEnemyState::Die) 
@@ -267,5 +267,10 @@ bool UEnemyFSM::GetRandomPositionInNavMesh(FVector centerLocation, float radius,
 	dest = loc.Location;
 
 	return result;
+}
+
+void UEnemyFSM::DamageWidget_Implementation()
+{
+
 }
 
