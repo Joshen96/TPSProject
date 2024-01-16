@@ -138,7 +138,7 @@ void UPlayerFire::InputFire()
 
 			//부딪힌 대상이 먼저 적인지 판단하기
 
-			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
+			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM1"));
 			if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 

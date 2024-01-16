@@ -88,9 +88,12 @@ public:
 	void OnDamageProcess();
 	//void OnDamageProcess(FHitResult _hitInfo);
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=FSM)
-	int32 hp = 3;
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category=FSM)
+	int32 currntHp = 0;
 
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category=FSM)
+	int32 maxHp = 10;
+	
 	//피격 딜레이 시간
 	UPROPERTY(EditAnywhere, Category=FSM)
 	float damageDelayTime = 2.0f;

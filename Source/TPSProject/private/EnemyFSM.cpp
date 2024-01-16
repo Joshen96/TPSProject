@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TPSProject.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ShapeComponent.h"
 #include "EnemyAnim.h"
 #include "AIController.h"
 #include "NavigationSystem.h"
@@ -32,6 +33,8 @@ void UEnemyFSM::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+	currntHp = maxHp;
 	// TPS플레이어 월드에서 찾아오기
 	// 찾은 플레이어를 타겟에 캐스팅
 	// 이컴포넌트를 가진 액터를 가져오기
@@ -48,6 +51,8 @@ void UEnemyFSM::BeginPlay()
 	anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
 	
 	ai = Cast<AAIController>(me->GetController());
+
+
 }
 
 
@@ -198,7 +203,7 @@ void UEnemyFSM::DieState()
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
 
-	me->kickDeActive();
+	
 	
 
 
@@ -209,10 +214,10 @@ void UEnemyFSM::DieState()
 // 대미지 입을때 맞은곳 파라매터
 void UEnemyFSM::OnDamageProcess()
 {
-	hp--;
+	currntHp--;
 	ai->StopMovement();
 
-	if (hp > 0)
+	if (currntHp > 0)
 	{
 		if (mState == EEnemyState::Die) 
 		{
@@ -247,6 +252,7 @@ void UEnemyFSM::OnDamageProcess()
 		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);
+		//me->kick->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		
 	}
 	anim->animstate = mState;
