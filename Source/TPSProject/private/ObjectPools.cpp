@@ -24,6 +24,8 @@ void UObjectPools::BeginPlay()
 			for (int i = 0; i < PoolSize; i++)
 			{
 				APooledObjects* PoolableActor = World->SpawnActor<APooledObjects>(PooledObjectSubclass, FVector().ZeroVector, FRotator().ZeroRotator);
+			
+				
 
 				if (PoolableActor != nullptr)
 				{

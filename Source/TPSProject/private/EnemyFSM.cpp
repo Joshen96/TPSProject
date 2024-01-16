@@ -13,6 +13,7 @@
 #include "NavigationSystem.h"
 #include <Runtime/AIModule/Classes/AITypes.h>
 #include "Navigation/PathFollowingComponent.h"
+#include "Misc/OutputDeviceNull.h"
 
 
 
@@ -216,6 +217,8 @@ void UEnemyFSM::OnDamageProcess()
 {
 	currntHp--;
 	ai->StopMovement();
+	FOutputDeviceNull pAR;
+	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
 	//DamageWidget();
 	if (currntHp > 0)
 	{
