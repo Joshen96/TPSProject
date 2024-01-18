@@ -30,7 +30,8 @@ ATPSPlayer::ATPSPlayer()
 	ObjectPool = CreateDefaultSubobject<UObjectPools>(TEXT("OBJPool"));
 	 
 	//스켈레톤 불러오기
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
+	//ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh (TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequin_UE4/Meshes/Ch18_nonPBR.Ch18_nonPBR'"));
 	if (TempMesh.Succeeded()) {
 		GetMesh()->SetSkeletalMesh(TempMesh.Object);// 불러온 매쉬장착 해줌
 
@@ -67,7 +68,10 @@ ATPSPlayer::ATPSPlayer()
 	{
 		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
 
-		gunMeshComp->SetRelativeLocation(FVector(-14, 55, 120));
+		gunMeshComp->SetRelativeLocation(FVector(0, -9, 3));
+		
+		gunMeshComp->SetRelativeRotation(FRotator(180, 90, 0));
+
 	}
 
 	//스나이퍼 매쉬컴포등록
@@ -82,8 +86,9 @@ ATPSPlayer::ATPSPlayer()
 	{
 		sniperMeshComp->SetSkeletalMesh(TempSniperMesh.Object);// 매시 할당하기
 
-		sniperMeshComp->SetRelativeLocation(FVector(-22, 55, 120));//위치 조절
+		sniperMeshComp->SetRelativeLocation(FVector(4, -42, -2));//위치 조절
 
+		sniperMeshComp->SetRelativeRotation(FRotator(270, 96.38, 90));
 		sniperMeshComp->SetRelativeScale3D(FVector(0.15f));//매쉬 크기조정
 	}
 
