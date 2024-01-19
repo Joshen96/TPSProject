@@ -8,6 +8,7 @@
 #include "Enemy.h"
 
 
+
 ABullet_OP::ABullet_OP()
 {
 
@@ -69,6 +70,7 @@ void ABullet_OP::BeginPlay()
 
 	collisionComp->OnComponentBeginOverlap.AddDynamic(this, &ABullet_OP::OnEnemyTouch); // 행동할 함수 델리게이트 탑재
 
+
 	//SetLifeSpan(LifeTime);
 }
 
@@ -76,6 +78,7 @@ void ABullet_OP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FrontShot(DeltaTime);
+
 }
 
 void ABullet_OP::Die()
@@ -103,7 +106,8 @@ void ABullet_OP::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* 
 	if (enemy) {
 		auto enemyFSM = Cast<UEnemyFSM>(enemy);
 
-		enemyFSM->OnDamageProcess();
+
+		enemyFSM->OnDamageProcess(bulletDamage);
 		UE_LOG(LogTemp, Warning, TEXT("touch"));
 
 
@@ -115,7 +119,10 @@ void ABullet_OP::FrontShot(float DeltaTime)
 	FVector newLocation = GetActorLocation() + GetActorForwardVector() * speed * DeltaTime;
 
 	SetActorLocation(newLocation);
+
 }
+
+
 
 
 

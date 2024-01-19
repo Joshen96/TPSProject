@@ -103,7 +103,7 @@ void ABullet::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (enemy) {
 		auto enemyFSM = Cast<UEnemyFSM>(enemy);
 
-		enemyFSM->OnDamageProcess();
+		//enemyFSM->OnDamageProcess();
 		//UE_LOG(LogTemp, Warning, TEXT("touch"));
 
 

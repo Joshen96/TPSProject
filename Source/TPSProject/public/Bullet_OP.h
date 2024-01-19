@@ -51,6 +51,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float speed = 5000;
 
+	UPROPERTY(EditAnywhere, Category = Settings)
+	int bulletDamage = 0;
 	//virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 
@@ -62,6 +64,10 @@ public:
 	//총알 발사체 없애고 전방이동
 	UFUNCTION()
 	void FrontShot(float DeltaTime);
+
+
+
+	
 
 	//void SimulationEnabled(bool type);
 	

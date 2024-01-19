@@ -213,9 +213,9 @@ void UEnemyFSM::DieState()
 	}
 }
 // 대미지 입을때 맞은곳 파라매터
-void UEnemyFSM::OnDamageProcess()
+void UEnemyFSM::OnDamageProcess(int _damagehp)
 {
-	currntHp--;
+	currntHp-=_damagehp;
 	ai->StopMovement();
 	FOutputDeviceNull pAR;
 	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
@@ -243,6 +243,13 @@ void UEnemyFSM::OnDamageProcess()
 			int32 index = FMath::RandRange(0, 1);
 			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
 			anim->PlayDamageAnim(*sectionName);
+
+
+			//데미지 이미지 출력하기
+			
+			me->CallFunctionByNameWithArguments(TEXT("CreateDamageUI"), pAR, nullptr, true);
+
+
 		}
 			
 

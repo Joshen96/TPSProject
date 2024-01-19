@@ -85,7 +85,7 @@ public:
 
 
 	//피격알림 이벤트 함수
-	void OnDamageProcess();
+	void OnDamageProcess(int _damagehp);
 	//void OnDamageProcess(FHitResult _hitInfo);
 	
 	UPROPERTY(Editanywhere, BlueprintReadWrite, Category=FSM)

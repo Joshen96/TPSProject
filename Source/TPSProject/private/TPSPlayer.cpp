@@ -11,6 +11,7 @@
 #include "Enemy.h" //애너미 공격 받기위해
 #include "Kismet/GameplayStatics.h" //일시정지 위함
 #include "ObjectPools.h"
+#include "Blueprint/UserWidget.h"
 
 
 // Sets default values
@@ -24,7 +25,7 @@ ATPSPlayer::ATPSPlayer()
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
 
-	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire3"));//생성자 버그때매 블프구현
+	playerFire1 = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire1"));//생성자 버그때매 블프구현
 
 	
 	ObjectPool = CreateDefaultSubobject<UObjectPools>(TEXT("OBJPool"));
@@ -93,6 +94,8 @@ ATPSPlayer::ATPSPlayer()
 	}
 
 	
+
+	
 	
 }
 
@@ -116,6 +119,7 @@ void ATPSPlayer::BeginPlay()
 
 	hp = initiaHp;
 
+	
 	
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ATPSPlayer::OnEnemyKickOverlap); //적공격 델리게이트 탑재

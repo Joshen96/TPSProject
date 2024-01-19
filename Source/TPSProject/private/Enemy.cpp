@@ -35,7 +35,7 @@ AEnemy::AEnemy()
 	
 	kick->SetCollisionProfileName(TEXT("EnemyKick"));
 
-	fsm = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
+	fsm1 = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
 	//애너미 애님블루프린트 할당하기
 
 	ConstructorHelpers::FClassFinder<UAnimInstance> tempClass(TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/ABP_Enemy.ABP_Enemy_C'"));

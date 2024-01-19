@@ -14,24 +14,20 @@
 
 UPlayerFire::UPlayerFire()
 {
-	ConstructorHelpers::FObjectFinder<USoundBase>tempSound(TEXT("/Script/Engine.SoundWave'/Game/SniperGun/Rifle.Rifle'"));// 경로상에 있는 사운드 파일 을 꺼내오고
+	//ConstructorHelpers::FObjectFinder<USoundBase>tempSound(TEXT("/Script/Engine.SoundWave'/Game/SniperGun/Rifle.Rifle'"));// 경로상에 있는 사운드 파일 을 꺼내오고
 
-	if (tempSound.Succeeded()) //성공시
-	{
-		bulletsound = tempSound.Object;  //선언해둔 총알 사운드에 넣어줌
-	}
+	//if (tempSound.Succeeded()) //성공시
+	//{
+	//	bulletsound = tempSound.Object;  //선언해둔 총알 사운드에 넣어줌
+	//}
 
 
 	
-	
-	
+	//ConstructorHelpers::FObjectFinder<UUserWidget>tempSniperUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_SniperUI.WBP_SniperUI'"));
+	//sniperUIFactory = tempSniperUI.Object;
 
-
-	ConstructorHelpers::FObjectFinder<UUserWidget>tempSniperUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_SniperUI.WBP_SniperUI'"));
-	sniperUIFactory = tempSniperUI.Object;
-
-	ConstructorHelpers::FObjectFinder<UUserWidget>tempcrosshairUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_Crosshair.WBP_Crosshair'"));
-	crosshairUIFactory = tempcrosshairUI.Object;
+	//ConstructorHelpers::FObjectFinder<UUserWidget>tempcrosshairUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_Crosshair.WBP_Crosshair'"));
+	//crosshairUIFactory = tempcrosshairUI.Object;
 }
 
 void UPlayerFire::BeginPlay()
@@ -42,15 +38,16 @@ void UPlayerFire::BeginPlay()
 	sniperMeshComp = me->sniperMeshComp;
 
 	//스나이퍼 위젯설정
-	_sniperUI =  sniperUIFactory;// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
+	//_sniperUI =  sniperUIFactory;// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
 
-	_crosshairUI = crosshairUIFactory;
+	//_crosshairUI = crosshairUIFactory;
 
 
 	ChangeSniperGun();// 시작 스나이퍼로시작
 
 	bSniperAim = false;
-	_crosshairUI->AddToViewport();
+	//crosshairUIFactory->AddToViewport();
+	//_crosshairUI->AddToViewport();
 }
 
 void UPlayerFire::SetupInputBinding(UInputComponent* PlayerInputComponent)
@@ -142,7 +139,7 @@ void UPlayerFire::InputFire()
 			if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 
-				enemyFSM->OnDamageProcess();
+				enemyFSM->OnDamageProcess(sniper_Damage);
 
 
 			}
@@ -178,20 +175,20 @@ void UPlayerFire::SniperZoom()
 	if (bSniperAim) {
 
 		bSniperAim = false;
-		_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
+		//_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
 		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
 
-		_crosshairUI->AddToViewport();
+		//_crosshairUI->AddToViewport();
 	}
 	else
 	{
 		bSniperAim = true;
-		_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력
+		//_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력
 		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
 
-		_crosshairUI->RemoveFromParent();
+		//_crosshairUI->RemoveFromParent();
 
 	}
 }

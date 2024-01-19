@@ -70,13 +70,13 @@ public:
 
 	//공격 컴포넌트 부착
 
-	UPROPERTY(VisibleAnywhere, Category = Component)
-	class UPlayerBaseComponent* playerFire;
+	UPROPERTY(Editanywhere, Category = Component)
+	class UPlayerBaseComponent* playerFire1;
 
 
 	//체력
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
-	int32 hp;
+	int32 hp=0;
 
 	//초기 체력
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
@@ -106,7 +106,5 @@ public:
 
 
 	
-
 	
-
 };

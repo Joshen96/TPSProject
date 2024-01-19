@@ -4,6 +4,7 @@
 #include "ObjectPools.h"
 #include "Bullet_OP.h"
 #include <GameFramework/ProjectileMovementComponent.h>
+
 // Sets default values for this component's properties
 UObjectPools::UObjectPools()
 {
@@ -42,6 +43,7 @@ void UObjectPools::BeginPlay()
 
 APooledObjects* UObjectPools::SpawnPooledObject()
 {
+	
 	for (APooledObjects* PoolableActor : ObjectPool) {
 		if (PoolableActor != nullptr && !PoolableActor->IsActive())
 		{

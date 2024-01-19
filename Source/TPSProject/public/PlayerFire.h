@@ -24,6 +24,11 @@ public:
 	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent) override;
 
 
+	UPROPERTY(Editanywhere, category=Damage)
+	int sniper_Damage =1;
+
+
+
 	UPROPERTY()
 	class UCameraComponent* tpsCamComp;
 
@@ -67,25 +72,28 @@ public:
 
 
 	//스나이퍼 줌 UI관련 
-	UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	class UUserWidget* sniperUIFactory;
+	//UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
+	//class UUserWidget* sniperUIFactory;
 
 	//기본 크로스헤어 ui 관련
-	UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	class UUserWidget* crosshairUIFactory;
+	//UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
+	//		class UUserWidget* crosshairUIFactory;
 
 
 
 	//여기서 사용할 스나이퍼 유아이 인스턴스
-	class UUserWidget* _sniperUI;
+	//class UUserWidget* _sniperUI;
 	
 
 	//여기서 사용할 크로스헤어 유아이 인스턴스
-	class UUserWidget* _crosshairUI;
+	//class UUserWidget* _crosshairUI;
+
+	
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
 	void OnShotBullet();
 
+	
 
 	//스나이퍼 총알 파티클
 	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
