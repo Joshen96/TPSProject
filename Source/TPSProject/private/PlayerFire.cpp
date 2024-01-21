@@ -12,6 +12,8 @@
 #include "ObjectPools.h"
 
 
+FTimerHandle MemberTimerHandle;
+
 UPlayerFire::UPlayerFire()
 {
 	//ConstructorHelpers::FObjectFinder<USoundBase>tempSound(TEXT("/Script/Engine.SoundWave'/Game/SniperGun/Rifle.Rifle'"));// 경로상에 있는 사운드 파일 을 꺼내오고
@@ -34,7 +36,9 @@ void UPlayerFire::BeginPlay()
 {
 	Super::BeginPlay();
 	tpsCamComp = me->tpsCamComp;
-	gunMeshComp = me->gunMeshComp;
+	gunMeshCompRight = me->gunMeshCompRight;
+	gunMeshCompLeft = me->gunMeshCompLeft;
+
 	sniperMeshComp = me->sniperMeshComp;
 
 	//스나이퍼 위젯설정
@@ -48,14 +52,18 @@ void UPlayerFire::BeginPlay()
 	bSniperAim = false;
 	//crosshairUIFactory->AddToViewport();
 	//_crosshairUI->AddToViewport();
+	
+
+	//총알발사기 시간딜레이
+	GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, GrenadeShotDelay);
 }
 
 void UPlayerFire::SetupInputBinding(UInputComponent* PlayerInputComponent)
 {
 
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &UPlayerFire::InputFire);
-
-	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &UPlayerFire::ChangeGrenadeGun);
+	//나중에 키보드말고 해금으로 변경해야함
+	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &UPlayerFire::UseGrenadeGun);
 
 	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &UPlayerFire::ChangeSniperGun);
 
@@ -86,20 +94,7 @@ void UPlayerFire::InputFire()
 	UGameplayStatics::PlaySound2D(GetWorld(), bulletsound);
 
 	//총타입따라 생성
-	if (bUseingGrenadeGun) {
-		FTransform firePos = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
-
-		//GetWorld()->SpawnActor<AActor>(bulletFactory, firePos);
-		//오브젝트풀링으로 발사하기
-
-		//me->ObjectPool->SpawnPooledObject()->SetActorLocation(FVector::ZeroVector);
-
-		me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePos);
-
-
-	}
-	else
-	{
+	
 		//스나이퍼 총발사 라인트레이서 사용
 		// 카메라시작부터
 		FVector startPos = tpsCamComp->GetComponentLocation();
@@ -145,13 +140,15 @@ void UPlayerFire::InputFire()
 			}
 		}
 
-	}
+	
 }
 
-void UPlayerFire::ChangeGrenadeGun()
+void UPlayerFire::UseGrenadeGun()
 {
 	bUseingGrenadeGun = true;
-	gunMeshComp->SetVisibility(true);
+	gunMeshCompRight->SetVisibility(true);
+	gunMeshCompLeft->SetVisibility(true);
+
 	sniperMeshComp->SetVisibility(false);
 
 	me->OnUsingGrenade(bUseingGrenadeGun);
@@ -160,7 +157,8 @@ void UPlayerFire::ChangeGrenadeGun()
 void UPlayerFire::ChangeSniperGun()
 {
 	bUseingGrenadeGun = false;
-	gunMeshComp->SetVisibility(false);
+	gunMeshCompRight->SetVisibility(false);
+	gunMeshCompLeft->SetVisibility(false);
 	sniperMeshComp->SetVisibility(true);
 
 	me->OnUsingGrenade(bUseingGrenadeGun);
@@ -193,7 +191,23 @@ void UPlayerFire::SniperZoom()
 	}
 }
 
+void UPlayerFire::DelayGrenadeGun()
+{
+	
+		if (bUseingGrenadeGun) {
+			FTransform firePosRight = gunMeshCompRight->GetSocketTransform(TEXT("FirePosition"));
+			FTransform firePosLeft = gunMeshCompLeft->GetSocketTransform(TEXT("FirePosition"));
+
+
+			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosRight);
+			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosLeft);
+		}
+		GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, GrenadeShotDelay);
+}
+
 void UPlayerFire::OnShotBullet_Implementation()
 {
 
 }
+
+

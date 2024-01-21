@@ -61,17 +61,23 @@ ATPSPlayer::ATPSPlayer()
 
 	JumpMaxCount = 2;
 
-	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
-	gunMeshComp->SetupAttachment(GetMesh(), TEXT("hand_rSoket")); //ÃÑÀ» ¸öÃ¼¿¡ ºÎÂø
+	gunMeshCompRight = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshCompRight"));
+	gunMeshCompLeft = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshCompLeft"));
+
+	gunMeshCompRight->SetupAttachment(GetCapsuleComponent()); //ÃÑÀ» ¸öÃ¼¿¡ ºÎÂø
+	gunMeshCompLeft->SetupAttachment(GetCapsuleComponent()); //ÃÑÀ» ¸öÃ¼¿¡ ºÎÂø
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
 
 	if (TempGunMesh.Succeeded())
 	{
-		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
-
-		gunMeshComp->SetRelativeLocation(FVector(0, -9, 3));
+		gunMeshCompRight->SetSkeletalMesh(TempGunMesh.Object);
+		gunMeshCompLeft->SetSkeletalMesh(TempGunMesh.Object);
 		
-		gunMeshComp->SetRelativeRotation(FRotator(180, 90, 0));
+		gunMeshCompRight->SetRelativeLocation(FVector(0, 80, 11));
+		gunMeshCompLeft->SetRelativeLocation(FVector(0, -80, 11));
+		
+		gunMeshCompRight->SetRelativeRotation(FRotator(0, 0, 270));
+		gunMeshCompLeft->SetRelativeRotation(FRotator(0, 0, 270));
 
 	}
 
@@ -176,6 +182,11 @@ void ATPSPlayer::Tick(float DeltaTime)
 
 	// ¿òÁ÷ÀÓ ÄÄÆ÷³ÍÆ®·Î ÀÌµ¿
 	//Move();
+
+	
+		
+
+
 
 }
 

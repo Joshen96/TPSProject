@@ -35,7 +35,10 @@ public:
 	//총매쉬 
 
 	UPROPERTY()
-	class USkeletalMeshComponent* gunMeshComp;
+	class USkeletalMeshComponent* gunMeshCompRight;
+
+	UPROPERTY()
+	class USkeletalMeshComponent* gunMeshCompLeft;
 
 	//스나이퍼 총 매쉬
 	UPROPERTY()
@@ -57,11 +60,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InputFire();
 
-	void ChangeGrenadeGun();
+	void UseGrenadeGun();
 
 	void ChangeSniperGun();
 
 	void SniperZoom();
+
+	void DelayGrenadeGun();
+
 
 	//bool 부분
 	
@@ -69,6 +75,7 @@ public:
 
 	bool bSniperAim = true;
 
+	float GrenadeShotDelay = 1.0f;
 
 
 	//스나이퍼 줌 UI관련 

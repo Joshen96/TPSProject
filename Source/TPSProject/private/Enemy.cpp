@@ -77,6 +77,13 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+//void AEnemy::CreateDamageUI(int _Damage)
+//{
+
+//}
+
+
+
 void AEnemy::kickDeActive()
 {
 	kick->SetSphereRadius(0.1);

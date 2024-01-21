@@ -219,6 +219,8 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	ai->StopMovement();
 	FOutputDeviceNull pAR;
 	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
+
+	//me->CreateDamageUI(_damagehp);
 	//DamageWidget();
 	if (currntHp > 0)
 	{
@@ -247,8 +249,8 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 
 			//데미지 이미지 출력하기
 			
-			me->CallFunctionByNameWithArguments(TEXT("CreateDamageUI"), pAR, nullptr, true);
-
+			//me->CallFunctionByNameWithArguments(TEXT("CreateDamageUI"), pAR, nullptr, true);
+			me->CreateDamageUI(_damagehp);
 
 		}
 			

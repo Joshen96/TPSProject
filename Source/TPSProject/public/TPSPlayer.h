@@ -53,7 +53,12 @@ public:
 	//ÃÑ¸Å½¬ 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=GunMesh)
-	class USkeletalMeshComponent* gunMeshComp;
+	class USkeletalMeshComponent* gunMeshCompRight;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=GunMesh)
+	class USkeletalMeshComponent* gunMeshCompLeft;
+
+
 
 	//½º³ªÀÌÆÛ ÃÑ ¸Å½¬
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
