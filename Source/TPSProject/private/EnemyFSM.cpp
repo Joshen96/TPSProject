@@ -51,7 +51,7 @@ void UEnemyFSM::BeginPlay()
 	
 	anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
 	
-	ai = Cast<AAIController>(me->GetController());
+	//ai = Cast<AAIController>(me->GetController());
 
 
 }
@@ -96,7 +96,7 @@ void UEnemyFSM::IdleState()
 		anim->animstate = mState;// move 상태로 변환
 		
 
-		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos); 
+		//GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos); 
 	}
 }
 
@@ -108,8 +108,14 @@ void UEnemyFSM::MoveState()
 	//2.방향 필요  =  목적지 - 내위치 = 방향
 	FVector dir = destination - me->GetActorLocation();
 	//3.방향으로 이동
-	//me->AddMovementInput(dir.GetSafeNormal());
+	me->AddMovementInput(dir.GetSafeNormal());
+	
+	//me->SetActorRotation()
+	
 	//ai->MoveToLocation(destination);
+	
+	
+	/* AI 컨트롤러 이동
 	auto ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
 
 	FPathFindingQuery query;
@@ -121,7 +127,7 @@ void UEnemyFSM::MoveState()
 	ai->BuildPathfindingQuery(req, query);
 
 	FPathFindingResult r = ns->FindPathSync(query);
-
+	
 	if (r.Result == ENavigationQueryResult::Success)
 	{
 		ai->MoveToLocation(destination);
@@ -134,12 +140,12 @@ void UEnemyFSM::MoveState()
 			GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
 		}
 	}
-
+	*/
 
 	if (dir.Size() < attackRange)
 	{
 
-		ai->StopMovement();
+		//ai->StopMovement();
 
 		mState = EEnemyState::Attck;
 		anim->animstate = mState;
@@ -214,7 +220,7 @@ void UEnemyFSM::DieState()
 void UEnemyFSM::OnDamageProcess(int _damagehp)
 {
 	currntHp-=_damagehp;
-	ai->StopMovement();
+	//ai->StopMovement();
 	FOutputDeviceNull pAR;
 	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
 
