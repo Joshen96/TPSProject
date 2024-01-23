@@ -204,8 +204,9 @@ void UEnemyFSM::DieState()
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
 
-
+	//me->KillCount();
 	if (P.Z < -100.0f) {
+		//me->KillCount();
 		me->Destroy();//사라진다
 	}
 }
@@ -255,9 +256,10 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	}
 	else
 	{
+		//me->KillCount();
 		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		mState = EEnemyState::Die;
-		
+		me->KillCount();
 		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);

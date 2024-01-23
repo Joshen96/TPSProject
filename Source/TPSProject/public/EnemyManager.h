@@ -52,4 +52,8 @@ public:
 
 	void CreatEnemy();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = Count)
+	void CountEnemyEvent();
+	
+
 };

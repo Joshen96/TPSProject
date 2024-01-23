@@ -39,7 +39,7 @@ void AEnemyManager::CreatEnemy()
 	int index = FMath::RandRange(0, spawnPoints.Num() - 1); // 배열의.Num()는  int형 갯수 반환해줌
 	// 적을 위치에 생성
 	GetWorld()->SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
-
+	CountEnemyEvent();
 
 	float createTime = FMath::RandRange(minTime, maxTime);
 
