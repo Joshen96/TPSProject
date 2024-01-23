@@ -84,7 +84,9 @@ public:
 	float attackDelayTime = 3.0f;
 
 
+	
 	//피격알림 이벤트 함수
+	UFUNCTION(BlueprintCallable)
 	void OnDamageProcess(int _damagehp);
 	//void OnDamageProcess(FHitResult _hitInfo);
 	

@@ -204,11 +204,8 @@ void UEnemyFSM::DieState()
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
 
-	
-	
 
-
-	if (P.Z < -200.0f) {
+	if (P.Z < -100.0f) {
 		me->Destroy();//사라진다
 	}
 }
@@ -265,6 +262,8 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);
 		//me->kick->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+		
 		
 	}
 	anim->animstate = mState;

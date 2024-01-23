@@ -75,6 +75,7 @@ public:
 
 	bool bSniperAim = true;
 
+	UPROPERTY(Editanywhere, category = Damage)
 	float GrenadeShotDelay = 1.0f;
 
 

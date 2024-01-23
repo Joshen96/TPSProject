@@ -16,6 +16,8 @@ public:
 	ARotateActor();
 
 	float AngleAxis;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,5 +34,9 @@ public:
 
 	UPROPERTY(Editanywhere, Category = Movement)
 	float Multiplier;
+
+	UPROPERTY(Editanywhere,BlueprintReadWrite, Category = Movement)
+	float DamageHoming;
+
 
 };
