@@ -115,7 +115,8 @@ void UEnemyFSM::MoveState()
 	//ai->MoveToLocation(destination);
 	
 	
-	/* AI 컨트롤러 이동
+	// AI 컨트롤러 이동
+	/*
 	auto ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
 
 	FPathFindingQuery query;
@@ -141,7 +142,7 @@ void UEnemyFSM::MoveState()
 		}
 	}
 	*/
-
+	
 	if (dir.Size() < attackRange)
 	{
 
@@ -154,6 +155,8 @@ void UEnemyFSM::MoveState()
 
 		currentTime = attackDelayTime;
 	}
+	
+
 }
 
 void UEnemyFSM::AttckState()

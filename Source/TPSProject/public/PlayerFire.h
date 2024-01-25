@@ -105,7 +105,16 @@ public:
 
 	//스나이퍼 총알 파티클
 	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
-	class UParticleSystem* bulletEffectFactory;
+	class UParticleSystem* bulletEffectDefault;
+
+	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
+	class UParticleSystem* bulletEffectBlood;
+
+	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
+	class UParticleSystem* bulletEffectGround;
+
+
+
 	//발사 사운드 
 	UPROPERTY(EditDefaultsOnly, Category = Sound)// 아키타입에서 편집가능
 	class USoundBase* bulletsound;

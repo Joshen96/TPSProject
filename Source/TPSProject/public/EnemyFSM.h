@@ -109,8 +109,8 @@ public:
 	UPROPERTY()
 	class UEnemyAnim* anim;
 
-	//UPROPERTY(EditAnywhere, Category = FSM)
-	//class AAIController* ai;
+	UPROPERTY(EditAnywhere, Category = FSM)
+	class AAIController* ai;
 
 	//ai패트롤 기능
 	FVector randomPos;

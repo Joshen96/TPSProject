@@ -10,6 +10,7 @@
 #include <PlayerAnim.h>
 #include "GameFramework/CharacterMovementComponent.h"
 #include "ObjectPools.h"
+#include "Math/Rotator.h"
 
 
 FTimerHandle MemberTimerHandle;
@@ -114,9 +115,25 @@ void UPlayerFire::InputFire()
 
 			FTransform bulletTrans; //위치 담기위한 트랜스폼
 
-			bulletTrans.SetLocation(hitInfo.ImpactPoint); //트랜스폼을 맞은곳으로 변경
+			bulletTrans.SetLocation(hitInfo.ImpactPoint+hitInfo.ImpactNormal); //트랜스폼을 맞은곳으로 변경
+			//bulletTrans.SetLocation( //트랜스폼을 맞은곳으로 변경
 
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectFactory, bulletTrans); //그곳에 이펙트 구현
+				//bulletTrans+=
+
+
+				//FQuat::RotateVector(hitInfo.Normal);
+				//FRotator::Quaternion(hitInfo.ImpactNormal);
+
+				
+			
+			//bulletTrans.SetRotation(FQuat::Vector(hitInfo.ImpactNormal));
+			//bulletTrans.SetRotation(); //트랜스폼을 맞은곳으로 변경
+
+			
+
+			//이펙트 로테이션 세팅하기
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectBlood, bulletTrans); //그곳에 이펙트 구현
+			//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),bulletEffectBlood,hitInfo.ImpactPoint,  FVector(1, 1, 1), true); //그곳에 이펙트 구현
 
 			auto hitComp = hitInfo.GetComponent();
 			// 맞은것의 컴포넌트 가져오기
@@ -135,6 +152,7 @@ void UPlayerFire::InputFire()
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 
 				enemyFSM->OnDamageProcess(sniper_Damage);
+
 
 
 			}
