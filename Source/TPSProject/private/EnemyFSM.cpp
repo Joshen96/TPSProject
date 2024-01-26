@@ -207,7 +207,7 @@ void UEnemyFSM::DieState()
 {
 	//아래로떨어지도록
 	//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	
+	me->SpawnExp();
 	FVector P0 = me->GetActorLocation();
 	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
 	FVector P = P0 + vt;
@@ -216,7 +216,9 @@ void UEnemyFSM::DieState()
 	//me->KillCount();
 	if (P.Z < -100.0f) {
 		//me->KillCount();
+		//me->SpawnExp();
 		me->Destroy();//사라진다
+
 	}
 }
 // 대미지 입을때 맞은곳 파라매터
@@ -279,7 +281,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	}
 	anim->animstate = mState;
 }
-
+//AI 제거함
 bool UEnemyFSM::GetRandomPositionInNavMesh(FVector centerLocation, float radius, FVector& dest)
 {
 

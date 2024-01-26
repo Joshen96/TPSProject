@@ -50,4 +50,13 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = KillCount)
 	void KillCount();
+
+
+	UFUNCTION(BlueprintImplementableEvent, Category = SpawnExp)
+	void SpawnExp();
+
+
+
+
+
 };
