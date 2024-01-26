@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "ObjectPools.h"
 #include "Math/Rotator.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 FTimerHandle MemberTimerHandle;
@@ -116,41 +117,42 @@ void UPlayerFire::InputFire()
 			FTransform bulletTrans; //위치 담기위한 트랜스폼
 
 			bulletTrans.SetLocation(hitInfo.ImpactPoint+hitInfo.ImpactNormal); //트랜스폼을 맞은곳으로 변경
-			//bulletTrans.SetLocation( //트랜스폼을 맞은곳으로 변경
-
-				//bulletTrans+=
-
-
-				//FQuat::RotateVector(hitInfo.Normal);
-				//FRotator::Quaternion(hitInfo.ImpactNormal);
-
-				
-			
-			//bulletTrans.SetRotation(FQuat::Vector(hitInfo.ImpactNormal));
-			//bulletTrans.SetRotation(); //트랜스폼을 맞은곳으로 변경
-
 			
 
 			//이펙트 로테이션 세팅하기
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectBlood, bulletTrans); //그곳에 이펙트 구현
+			//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectBlood, bulletTrans); //그곳에 이펙트 구현
 			//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),bulletEffectBlood,hitInfo.ImpactPoint,  FVector(1, 1, 1), true); //그곳에 이펙트 구현
 
 			auto hitComp = hitInfo.GetComponent();
 			// 맞은것의 컴포넌트 가져오기
+			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
 
 			if (hitComp && hitComp->IsSimulatingPhysics()) //맞은것이 있고 맞은것이 물리적용가능하다면 
 			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectDefault, bulletTrans);
 				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 50000; // 맞은 표면에 힘의 반대방향으로 힘을 
 
 				hitComp->AddForce(force);
 			}
+			else if(enemy!=nullptr)
+			{
+				//auto enemyFSM = Cast<UEnemyFSM>(enemy);
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectBlood, bulletTrans);
 
+				//enemyFSM->OnDamageProcess(sniper_Damage);
+			}
+			else
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectGround, bulletTrans);
+
+			}
+			
 			//부딪힌 대상이 먼저 적인지 판단하기
 
-			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
+			//auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
 			if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
-
+				
 				enemyFSM->OnDamageProcess(sniper_Damage);
 
 
