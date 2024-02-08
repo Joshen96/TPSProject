@@ -3,3 +3,7 @@
 
 #include "MyDataAsset.h"
 
+UMyDataAsset::UMyDataAsset()
+{
+
+}

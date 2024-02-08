@@ -40,4 +40,7 @@ class TPSPROJECT_API UMyDataAsset : public UDataAsset
 	
 	UPROPERTY(EditAnywhere)
 	TArray<FMySkillinfo> AssetItems;
+public:
+
+	UMyDataAsset();
 };
