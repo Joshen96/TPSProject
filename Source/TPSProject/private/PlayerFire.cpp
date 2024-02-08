@@ -225,6 +225,12 @@ void UPlayerFire::DelayGrenadeGun()
 		GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, GrenadeShotDelay);
 }
 
+void UPlayerFire::BasicGunDamageUP_Implementation()
+{
+	sniper_Damage *=1.2;
+
+}
+
 void UPlayerFire::OnShotBullet_Implementation()
 {
 

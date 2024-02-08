@@ -24,8 +24,8 @@ public:
 	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent) override;
 
 
-	UPROPERTY(Editanywhere, category=Damage)
-	int sniper_Damage =1;
+	UPROPERTY(Editanywhere,BlueprintReadWrite, category=Damage)
+	int sniper_Damage =10;
 
 
 
@@ -100,6 +100,10 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
 	void OnShotBullet();
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = LVUP)
+	void BasicGunDamageUP();
 
 	
 
