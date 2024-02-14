@@ -76,7 +76,7 @@ public:
 	//공격 컴포넌트 부착
 
 	UPROPERTY(Editanywhere, Category = Component)
-	class UPlayerBaseComponent* playerFire1;
+	class UPlayerBaseComponent* playerFire;
 
 
 	//체력
@@ -87,6 +87,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
 	int32 initiaHp = 10;
 
+	//공격 부분
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = fireSet)
+	float BasicGunDamage = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = fireSet)
+	float SubGunDelay=0;	
 
 	UFUNCTION(BlueprintCallable, Category = Health)
 	//피격 이벤트

@@ -37,6 +37,8 @@ UPlayerFire::UPlayerFire()
 void UPlayerFire::BeginPlay()
 {
 	Super::BeginPlay();
+	//sniper_Damage = me->BasicGunDamage;
+	//GrenadeShotDelay = me->SubGunDelay;
 	tpsCamComp = me->tpsCamComp;
 	gunMeshCompRight = me->gunMeshCompRight;
 	gunMeshCompLeft = me->gunMeshCompLeft;
@@ -153,7 +155,7 @@ void UPlayerFire::InputFire()
 			if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 				
-				enemyFSM->OnDamageProcess(sniper_Damage);
+				enemyFSM->OnDamageProcess(me->BasicGunDamage);
 
 
 
@@ -222,7 +224,7 @@ void UPlayerFire::DelayGrenadeGun()
 			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosRight);
 			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosLeft);
 		}
-		GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, GrenadeShotDelay);
+		GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, me->SubGunDelay);
 }
 
 void UPlayerFire::BasicGunDamageUP_Implementation()

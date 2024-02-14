@@ -25,7 +25,7 @@ public:
 
 
 	UPROPERTY(Editanywhere,BlueprintReadWrite, category=Damage)
-	int sniper_Damage =10;
+	float sniper_Damage =10;
 
 
 
