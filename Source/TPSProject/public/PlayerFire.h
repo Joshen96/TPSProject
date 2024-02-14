@@ -24,7 +24,7 @@ public:
 	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent) override;
 
 
-	UPROPERTY(Editanywhere,BlueprintReadWrite, category=Damage)
+	UPROPERTY(Editanywhere, BlueprintReadWrite, category=Damage)
 	float sniper_Damage =10;
 
 
@@ -75,7 +75,7 @@ public:
 
 	bool bSniperAim = true;
 
-	UPROPERTY(Editanywhere, category = Damage)
+	UPROPERTY(Editanywhere, BlueprintReadWrite, category = Damage)
 	float GrenadeShotDelay = 1.0f;
 
 
