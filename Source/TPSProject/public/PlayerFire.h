@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(ClassGroup=(PlayerComponent),meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom),meta = (BlueprintSpawnableComponent))
 class TPSPROJECT_API UPlayerFire : public UPlayerBaseComponent
 {
 	GENERATED_BODY()
@@ -60,6 +60,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InputFire();
 
+	UFUNCTION(BlueprintCallable)
 	void UseGrenadeGun();
 
 	void ChangeSniperGun();
@@ -71,7 +72,7 @@ public:
 
 	//bool ºÎºÐ
 	
-	bool bUseingGrenadeGun = false;
+	
 
 	bool bSniperAim = true;
 

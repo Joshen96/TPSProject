@@ -67,9 +67,9 @@ void UPlayerFire::SetupInputBinding(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &UPlayerFire::InputFire);
 	//나중에 키보드말고 해금으로 변경해야함
-	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &UPlayerFire::UseGrenadeGun);
+	//PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &UPlayerFire::UseGrenadeGun);
 
-	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &UPlayerFire::ChangeSniperGun);
+	//PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &UPlayerFire::ChangeSniperGun);
 
 
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &UPlayerFire::SniperZoom);
@@ -164,31 +164,31 @@ void UPlayerFire::InputFire()
 
 	
 }
-
+//해금으로 변경
 void UPlayerFire::UseGrenadeGun()
 {
-	bUseingGrenadeGun = true;
+	//bUseingGrenadeGun = true;
 	gunMeshCompRight->SetVisibility(true);
 	gunMeshCompLeft->SetVisibility(true);
 
-	sniperMeshComp->SetVisibility(false);
+	//sniperMeshComp->SetVisibility(false);
 
-	me->OnUsingGrenade(bUseingGrenadeGun);
+	//me->OnUsingGrenade(bUseingGrenadeGun);
 }
 
 void UPlayerFire::ChangeSniperGun()
 {
-	bUseingGrenadeGun = false;
+	//bUseingGrenadeGun = false;
 	gunMeshCompRight->SetVisibility(false);
 	gunMeshCompLeft->SetVisibility(false);
 	sniperMeshComp->SetVisibility(true);
 
-	me->OnUsingGrenade(bUseingGrenadeGun);
+	//me->OnUsingGrenade(bUseingGrenadeGun);
 }
 
 void UPlayerFire::SniperZoom()
 {
-	if (bUseingGrenadeGun) {
+	if (me->bUseingGrenadeGun) {
 		return;
 	}
 
@@ -216,7 +216,7 @@ void UPlayerFire::SniperZoom()
 void UPlayerFire::DelayGrenadeGun()
 {
 	
-		if (bUseingGrenadeGun) {
+		if (me->bUseingGrenadeGun) {
 			FTransform firePosRight = gunMeshCompRight->GetSocketTransform(TEXT("FirePosition"));
 			FTransform firePosLeft = gunMeshCompLeft->GetSocketTransform(TEXT("FirePosition"));
 

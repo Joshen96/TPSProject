@@ -64,8 +64,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 	class USkeletalMeshComponent* sniperMeshComp;
 
-
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	bool bUseingGrenadeGun = false;
 
 	
 	//¹«ºê ÄÄÆ÷³ÍÆ® ºÎÂø
@@ -75,7 +75,7 @@ public:
 
 	//°ø°Ý ÄÄÆ÷³ÍÆ® ºÎÂø
 
-	UPROPERTY(Editanywhere, Category = Component)
+	UPROPERTY(Editanywhere, BlueprintReadWrite,  Category = Component)
 	class UPlayerBaseComponent* playerFire;
 
 
@@ -115,6 +115,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Health)
 	void OnUsingGrenade(bool isGrenade);
 
+
+	UFUNCTION(BlueprintCallable)
+	void UseGrenadeGun();
 
 	
 	

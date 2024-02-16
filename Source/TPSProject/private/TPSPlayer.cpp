@@ -225,6 +225,14 @@ void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 }
 
+void ATPSPlayer::UseGrenadeGun()
+{
+	gunMeshCompRight->SetVisibility(true);
+	gunMeshCompLeft->SetVisibility(true);
+
+	bUseingGrenadeGun = true;
+}
+
 
 
 
@@ -234,6 +242,7 @@ void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AA
 void ATPSPlayer::OnGameOver_Implementation()
 {
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
+	
 
 }
 
