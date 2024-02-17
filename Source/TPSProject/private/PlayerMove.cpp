@@ -12,7 +12,8 @@ void UPlayerMove::BeginPlay()
 {
 	Super::BeginPlay();
 
-	moveComp->MaxWalkSpeed = walkSpeed; //초기 속도 설정
+	moveComp->MaxWalkSpeed = me->walkSpeed; //초기 속도 설정
+	me->isRunning = false;
 }
 
 
@@ -51,7 +52,7 @@ void UPlayerMove::SetupInputBinding(UInputComponent* PlayerInputComponent)
 
 	//키보드 런 바인딩 액션 
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &UPlayerMove::InputRun);
-	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &UPlayerMove::InputRun);
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &UPlayerMove::InputWalk);
 
 	
 }
@@ -98,12 +99,16 @@ void UPlayerMove::InputRun()
 {
 	auto movement = moveComp;
 
-	if (movement->MaxWalkSpeed > walkSpeed)
-	{
-		movement->MaxWalkSpeed = walkSpeed;
-	}
-	else
-	{
-		movement->MaxWalkSpeed = runSpeed;
-	}
+	
+	movement->MaxWalkSpeed = me->runSpeed;
+
 }
+
+void UPlayerMove::InputWalk()
+{
+	auto movement = moveComp;
+
+
+	movement->MaxWalkSpeed = me->walkSpeed;
+}
+

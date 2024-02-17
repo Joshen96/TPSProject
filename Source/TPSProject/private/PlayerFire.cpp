@@ -188,10 +188,6 @@ void UPlayerFire::ChangeSniperGun()
 
 void UPlayerFire::SniperZoom()
 {
-	if (me->bUseingGrenadeGun) {
-		return;
-	}
-
 	if (bSniperAim) {
 
 		bSniperAim = false;

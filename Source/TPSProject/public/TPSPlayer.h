@@ -87,6 +87,20 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
 	int32 initiaHp = 10;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSpeed)
+	float walkSpeed = 500;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSpeed)
+	float runSpeed = 800;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = PlayerSpeed)
+	bool isRunning = false;
+
+
+
+
+
 	//공격 부분
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = fireSet)
 	float BasicGunDamage = 0;

@@ -224,6 +224,9 @@ void UEnemyFSM::DieState()
 // 대미지 입을때 맞은곳 파라매터
 void UEnemyFSM::OnDamageProcess(int _damagehp)
 {
+	//데미지 이미지 출력하기
+	me->CreateDamageUI(_damagehp);
+
 	currntHp-=_damagehp;
 	//ai->StopMovement();
 	FOutputDeviceNull pAR;
@@ -235,6 +238,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	{
 		if (mState == EEnemyState::Die) 
 		{
+			//me->CreateDamageUI(_damagehp);
 			return;
 		}
 		else {
@@ -259,7 +263,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 			//데미지 이미지 출력하기
 			
 			//me->CallFunctionByNameWithArguments(TEXT("CreateDamageUI"), pAR, nullptr, true);
-			me->CreateDamageUI(_damagehp);
+			//me->CreateDamageUI(_damagehp);
 
 		}
 			
