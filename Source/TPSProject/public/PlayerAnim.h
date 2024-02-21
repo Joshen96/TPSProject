@@ -38,6 +38,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Player)
 	class UAnimMontage* attckAnimMontage;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = AttMontage)
 	void PlayAttckAnim();
 
 

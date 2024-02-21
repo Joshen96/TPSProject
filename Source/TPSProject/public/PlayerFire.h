@@ -53,7 +53,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
 	TSubclassOf<class AActor> bulletFactory;
 
-
+	UPROPERTY(VisibleAnywhere, Category = Player)
+	class ATPSPlayer* mes;
 
 	//함수 부분
 	

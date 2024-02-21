@@ -44,7 +44,8 @@ void UPlayerFire::BeginPlay()
 	gunMeshCompLeft = me->gunMeshCompLeft;
 
 	sniperMeshComp = me->sniperMeshComp;
-
+	mes = Cast<ATPSPlayer>(GetOwner());
+	
 	//스나이퍼 위젯설정
 	//_sniperUI =  sniperUIFactory;// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
 
@@ -84,7 +85,7 @@ void UPlayerFire::InputFire()
 {
 
 	//애니메이션 실행
-	auto anim = Cast<UPlayerAnim>(me->GetMesh()->GetAnimInstance());
+	auto anim = Cast<UPlayerAnim>(mes->GetMesh()->GetAnimInstance());
 	anim->PlayAttckAnim();// 받아와서 기능실행
 
 	//카메라 쉐이크 실행
