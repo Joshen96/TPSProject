@@ -33,9 +33,15 @@ void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 	
 		// ¶¥¿¡ ¼¸´ÂÁö ¿©ºÎ
 		auto movement = Player->GetCharacterMovement();
+
+
 		isInAir = movement->IsFalling();
 
-	
+		isInHit = Player->isHit;	
+		
+		
+		HitIndex = Player->HitIndex;
+		
 	}
 	
 }

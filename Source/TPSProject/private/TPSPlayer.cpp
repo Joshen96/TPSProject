@@ -126,7 +126,7 @@ void ATPSPlayer::BeginPlay()
 	hp = initiaHp;
 
 	
-	
+	HitIndex = FMath::RandRange(0, 3);
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ATPSPlayer::OnEnemyKickOverlap); //적공격 델리게이트 탑재
 
@@ -183,7 +183,10 @@ void ATPSPlayer::Tick(float DeltaTime)
 	// 움직임 컴포넌트로 이동
 	//Move();
 
-	
+	if (isHit == true)
+	{
+		PlayerhitTimeCheck();
+	}
 		
 
 
@@ -233,6 +236,22 @@ void ATPSPlayer::UseGrenadeGun()
 	bUseingGrenadeGun = true;
 }
 
+void ATPSPlayer::PlayerhitTimeCheck()
+{
+	
+	currentTime += GetWorld()->DeltaTimeSeconds;
+
+	if (currentTime > damageDelayTime) {
+	
+		isHit = false;
+		currentTime = 0;
+		HitIndex=FMath::RandRange(0, 3);
+	}
+
+}
+
+
+
 
 
 
@@ -253,6 +272,7 @@ void ATPSPlayer::onHitEvent()
 
 	hp--;
 
+	isHit = true;
 	if (hp <= 0)
 	{
 		PRINT_LOG(TEXT("player Dead"));

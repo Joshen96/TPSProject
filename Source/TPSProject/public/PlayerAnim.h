@@ -34,12 +34,25 @@ public:
 	bool isInAir = false;
 
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+	bool isInHit = false;
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+
+	float HitIndex = 0;
+
+
+
 	//몽타주 만든것 넣어줘야함
 	UPROPERTY(EditDefaultsOnly, Category=Player)
 	class UAnimMontage* attckAnimMontage;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = AttMontage)
 	void PlayAttckAnim();
+
+
+
 
 
 };

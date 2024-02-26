@@ -97,10 +97,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = PlayerSpeed)
 	bool isRunning = false;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = PlayerState)
+	bool isHit = false;
 
+	int HitIndex =0;
 
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+	float damageDelayTime = 1.0f;
 
-
+	float currentTime = 0;
 	//공격 부분
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = fireSet)
 	float BasicGunDamage = 0;
@@ -133,6 +138,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UseGrenadeGun();
 
+	void PlayerhitTimeCheck();
 	
 	
 };
