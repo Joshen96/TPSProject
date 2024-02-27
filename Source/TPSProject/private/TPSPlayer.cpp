@@ -12,6 +12,7 @@
 #include "Kismet/GameplayStatics.h" //일시정지 위함
 #include "ObjectPools.h"
 #include "Blueprint/UserWidget.h"
+#include <PlayerAnim.h>
 
 
 // Sets default values
@@ -273,6 +274,11 @@ void ATPSPlayer::onHitEvent()
 	hp--;
 
 	isHit = true;
+	int32 index = FMath::RandRange(0, 3);
+	FString sectionName = FString::Printf(TEXT("Hit%d"), index);
+	auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
+	anim->PlayerHitAnim(*sectionName);
+
 	if (hp <= 0)
 	{
 		PRINT_LOG(TEXT("player Dead"));

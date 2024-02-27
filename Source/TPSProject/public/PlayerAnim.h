@@ -51,6 +51,10 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = AttMontage)
 	void PlayAttckAnim();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = AttMontage)
+
+	void PlayerHitAnim(FName sectionName);
+
 
 
 
