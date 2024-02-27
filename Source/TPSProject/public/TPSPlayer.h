@@ -103,7 +103,7 @@ public:
 	int HitIndex =0;
 
 	UPROPERTY(EditAnywhere, Category = PlayerState)
-	float damageDelayTime = 1.0f;
+	float damageDelayTime = 1.5f;
 
 	float currentTime = 0;
 	//공격 부분
@@ -116,6 +116,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Health)
 	//피격 이벤트
 	void onHitEvent();
+
+
+	UFUNCTION(BlueprintCallable, Category = Health)
+	//피격 무적기능시간
+	void PlayerhitTimeCheck();
+
+	UFUNCTION(BlueprintCallable, Category = Health)
+	void PlayerMeshBlink();
 
 	//피격 콜리젼
 	UFUNCTION()
@@ -138,7 +146,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UseGrenadeGun();
 
-	void PlayerhitTimeCheck();
 	
 	
 };

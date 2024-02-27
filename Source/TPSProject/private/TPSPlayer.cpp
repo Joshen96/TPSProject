@@ -130,7 +130,10 @@ void ATPSPlayer::BeginPlay()
 	HitIndex = FMath::RandRange(0, 3);
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ATPSPlayer::OnEnemyKickOverlap); //적공격 델리게이트 탑재
+	
+	FTimerHandle Hidden;
 
+	GetWorld()->GetTimerManager().SetTimer(Hidden, this, &ATPSPlayer::PlayerMeshBlink, 0.1f, true);
 	// 무브 컴포넌트
 	//playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
@@ -183,11 +186,15 @@ void ATPSPlayer::Tick(float DeltaTime)
 
 	// 움직임 컴포넌트로 이동
 	//Move();
-
+	
 	if (isHit == true)
 	{
 		PlayerhitTimeCheck();
+		//GetWorld()->GetTimerManager().SetTimer()
+		//PlayerMeshBlink();
+
 	}
+	
 		
 
 
@@ -223,6 +230,7 @@ void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	if (enemy != nullptr)
 	{
 	
+
 			onHitEvent();
 		
 	}
@@ -241,14 +249,36 @@ void ATPSPlayer::PlayerhitTimeCheck()
 {
 	
 	currentTime += GetWorld()->DeltaTimeSeconds;
+	
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerHit"));
 
 	if (currentTime > damageDelayTime) {
 	
+		GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCollision"));
 		isHit = false;
 		currentTime = 0;
-		HitIndex=FMath::RandRange(0, 3);
+		GetMesh()->SetVisibility(true);
+
+
+
 	}
 
+}
+
+void ATPSPlayer::PlayerMeshBlink()
+{
+	if (isHit) {
+		if (GetMesh()->IsVisible() == false) {
+			//GetMesh()->bHiddenInGame = true;
+			GetMesh()->SetVisibility(true);
+			UE_LOG(LogTemp, Warning, TEXT("hidden"));
+		}
+		else
+		{
+			GetMesh()->SetVisibility(false);
+			UE_LOG(LogTemp, Warning, TEXT("Nohidden"));
+		}
+	}
 }
 
 
@@ -279,9 +309,13 @@ void ATPSPlayer::onHitEvent()
 	auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 	anim->PlayerHitAnim(*sectionName);
 
+	//PlayerhitTimeCheck();
+
 	if (hp <= 0)
 	{
 		PRINT_LOG(TEXT("player Dead"));
 		OnGameOver();
 	}
 }
+
+
