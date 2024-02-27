@@ -134,6 +134,8 @@ void ATPSPlayer::BeginPlay()
 	FTimerHandle Hidden;
 
 	GetWorld()->GetTimerManager().SetTimer(Hidden, this, &ATPSPlayer::PlayerMeshBlink, 0.1f, true);
+	//블링크 설정
+
 	// 무브 컴포넌트
 	//playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	// 사용할 공격 컴포넌트 할당
@@ -230,8 +232,9 @@ void ATPSPlayer::OnEnemyKickOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	if (enemy != nullptr)
 	{
 	
-
+		if (!isHit) {
 			onHitEvent();
+		}
 		
 	}
 
@@ -247,15 +250,16 @@ void ATPSPlayer::UseGrenadeGun()
 
 void ATPSPlayer::PlayerhitTimeCheck()
 {
-	
-	currentTime += GetWorld()->DeltaTimeSeconds;
-	
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerHit"));
 
-	if (currentTime > damageDelayTime) {
+	currentTime += GetWorld()->DeltaTimeSeconds;
 	
-		GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCollision"));
+	
+
+	if (currentTime > damageDelayTime) {
 		isHit = false;
+		GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCollision"));
+		//isHit = false;
 		currentTime = 0;
 		GetMesh()->SetVisibility(true);
 
@@ -271,12 +275,12 @@ void ATPSPlayer::PlayerMeshBlink()
 		if (GetMesh()->IsVisible() == false) {
 			//GetMesh()->bHiddenInGame = true;
 			GetMesh()->SetVisibility(true);
-			UE_LOG(LogTemp, Warning, TEXT("hidden"));
+			//UE_LOG(LogTemp, Warning, TEXT("hidden"));
 		}
 		else
 		{
 			GetMesh()->SetVisibility(false);
-			UE_LOG(LogTemp, Warning, TEXT("Nohidden"));
+			//UE_LOG(LogTemp, Warning, TEXT("Nohidden"));
 		}
 	}
 }
@@ -299,16 +303,17 @@ void ATPSPlayer::OnGameOver_Implementation()
 void ATPSPlayer::onHitEvent()
 {
 	PRINT_LOG(TEXT("Damaged!!!!"));
-
-
-	hp--;
-
+	
 	isHit = true;
+	//GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerHit"));
+	
+
 	int32 index = FMath::RandRange(0, 3);
 	FString sectionName = FString::Printf(TEXT("Hit%d"), index);
 	auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 	anim->PlayerHitAnim(*sectionName);
 
+	hp--;
 	//PlayerhitTimeCheck();
 
 	if (hp <= 0)
