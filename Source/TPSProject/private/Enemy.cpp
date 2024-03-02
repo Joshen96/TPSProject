@@ -38,12 +38,12 @@ AEnemy::AEnemy()
 	fsm = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
 	//애너미 애님블루프린트 할당하기
 
-	ConstructorHelpers::FClassFinder<UAnimInstance> tempClass(TEXT("/Script/'Engine.AnimBlueprint'/Game/Blueprints/ABP_Enemy.ABP_Enemy_C'"));
+	//ConstructorHelpers::FClassFinder<UAnimInstance> tempClass(TEXT("/Script/'Engine.AnimBlueprint'/Game/Blueprints/ABP_Enemy.ABP_Enemy_C'"));
 
-	if (tempClass.Succeeded())
-	{
-		GetMesh()->SetAnimInstanceClass(tempClass.Class);
-	}
+	//if (tempClass.Succeeded())
+	//{
+	//	GetMesh()->SetAnimInstanceClass(tempClass.Class);
+	//}
 
 	//애니메이션 가져오기
 
