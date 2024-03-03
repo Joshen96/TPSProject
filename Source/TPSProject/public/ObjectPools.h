@@ -2,7 +2,9 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
 #include "PooledObjects.h"
+#include "Components/ActorComponent.h"
 #include "ObjectPools.generated.h"
 
 
@@ -15,7 +17,8 @@ public:
 	// Sets default values for this component's properties
 	UObjectPools();
 
-	UFUNCTION(BlueprintCallable,Category ="ObjectPool")
+
+	//UFUNCTION(BlueprintCallable,Category ="ObjectPool")
 	APooledObjects* SpawnPooledObject();
 
 	UPROPERTY(EditAnywhere, Category = "ObjectPool")
@@ -27,6 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "ObjectPool")
 	float PooledObjectLifeSpan = 0.0f;
 
+	UFUNCTION()
 	void OnPooledObjectDespawn(APooledObjects* PoolActor);
 
 
@@ -35,9 +39,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-
+private:
 	TArray<APooledObjects*> ObjectPool;
-	TArray<int>SpawnedPoolIndexes;
+	TArray<int32>SpawnedPoolIndexes;
 
 
 		
