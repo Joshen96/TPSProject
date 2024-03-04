@@ -14,6 +14,7 @@
 #include <Runtime/AIModule/Classes/AITypes.h>
 #include "Navigation/PathFollowingComponent.h"
 #include "Misc/OutputDeviceNull.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 
@@ -164,6 +165,10 @@ void UEnemyFSM::AttckState()
 	//시간을 주어 공격 딜레이
 	currentTime += GetWorld()->DeltaTimeSeconds;
 
+	//공격시 타겟을 바라보도록 설정
+	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(me->GetActorLocation(), target->GetActorLocation());
+	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
+	me->SetActorRotation(Lookat);
 
 
 	if (currentTime > attackDelayTime) {
