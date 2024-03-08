@@ -51,8 +51,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float speed = 5000;
 
-	UPROPERTY(EditAnywhere, Category = Settings)
-	int bulletDamage = 5;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Settings)
+	float bulletDamage = 5;
 	//virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 

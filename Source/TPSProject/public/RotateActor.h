@@ -32,10 +32,10 @@ public:
 	UPROPERTY(Editanywhere, Category = Movement)
 	FVector AxisVector;
 
-	UPROPERTY(Editanywhere, Category = Movement)
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = Movement)
 	float Multiplier;
 
-	UPROPERTY(Editanywhere,BlueprintReadWrite, Category = Movement)
+	UPROPERTY(Editanywhere,BlueprintReadWrite, Category = Damage)
 	float DamageHoming;
 
 
