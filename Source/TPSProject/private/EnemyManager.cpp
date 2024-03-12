@@ -35,11 +35,17 @@ void AEnemyManager::Tick(float DeltaTime)
 
 void AEnemyManager::CreatEnemy()
 {
+		
+	//OnMyCustomEvent.Broadcast();
+	//CountEnemyEvent();
 	// 위치를 정하고
 	int index = FMath::RandRange(0, spawnPoints.Num() - 1); // 배열의.Num()는  int형 갯수 반환해줌
 	// 적을 위치에 생성
-	GetWorld()->SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
-	CountEnemyEvent();
+
+	//GetWorld()->
+		
+	//SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
+	CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0)));
 
 	float createTime = FMath::RandRange(minTime, maxTime);
 

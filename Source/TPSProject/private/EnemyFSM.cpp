@@ -218,10 +218,10 @@ void UEnemyFSM::DieState()
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
 
-	//me->KillCount();
+	
 	if (P.Z < -100.0f) {
-		//me->KillCount();
-		//me->SpawnExp();
+		
+		
 		me->Destroy();//사라진다
 
 	}
@@ -276,10 +276,10 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	}
 	else
 	{
-		//me->KillCount();
+		me->KillCount(); //이벤트 디스패처로 구현할예정
 		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		mState = EEnemyState::Die;
-		me->KillCount();
+		
 		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);

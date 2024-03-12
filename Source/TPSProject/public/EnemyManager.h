@@ -7,6 +7,7 @@
 #include "EnemyManager.generated.h"
 
 
+
 UCLASS()
 class TPSPROJECT_API AEnemyManager : public AActor
 {
@@ -50,10 +51,16 @@ public:
 	//타이머 핸들 설정
 	FTimerHandle  spawnTimerHandle;
 
+	// 블루프린트에서 바인딩할 이벤트 함수 선언
+	
 	void CreatEnemy();
 
+	// 블루프린트에서 바인딩할 이벤트 델리게이트 선언
+	
+	
+
 	UFUNCTION(BlueprintImplementableEvent, Category = Count)
-	void CountEnemyEvent();
+	void CountEnemyEvent(AEnemy *EnemyOBJ);
 	
 
 };
