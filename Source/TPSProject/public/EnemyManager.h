@@ -46,18 +46,25 @@ public:
 	// 생성할 에너미BP
 
 	UPROPERTY(EditAnyWhere, Category = SpawnSetting)
-	TSubclassOf<class AEnemy> enemyFactory; 
+	TArray<TSubclassOf<class AEnemy>> enemyFactory;
 
 	//타이머 핸들 설정
 	FTimerHandle  spawnTimerHandle;
 
 	// 블루프린트에서 바인딩할 이벤트 함수 선언
-	
+	UFUNCTION(BlueprintCallable, Category = Count)
 	void CreatEnemy();
 
 	// 블루프린트에서 바인딩할 이벤트 델리게이트 선언
 	
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = SpawnSetting)
+	bool bSpawnLock = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = SpawnSetting)
+	int32 SpawnProbability = 50;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = SpawnSetting)
+	bool bDistanceEnemySpawn = false;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Count)
 	void CountEnemyEvent(AEnemy *EnemyOBJ);

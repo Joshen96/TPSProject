@@ -35,21 +35,49 @@ void AEnemyManager::Tick(float DeltaTime)
 
 void AEnemyManager::CreatEnemy()
 {
+	if (bSpawnLock == true) 
+	{
 		
-	//OnMyCustomEvent.Broadcast();
-	//CountEnemyEvent();
-	// 위치를 정하고
-	int index = FMath::RandRange(0, spawnPoints.Num() - 1); // 배열의.Num()는  int형 갯수 반환해줌
-	// 적을 위치에 생성
+		float createTime = FMath::RandRange(minTime, maxTime);
 
-	//GetWorld()->
-		
-	//SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
-	CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0)));
+		GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreatEnemy, createTime);
+	}
+	else
+	{
+		//OnMyCustomEvent.Broadcast();
+		//CountEnemyEvent();
+		// 위치를 정하고
+		int index = FMath::RandRange(0, spawnPoints.Num() - 1); // 배열의.Num()는  int형 갯수 반환해줌
+		// 적을 위치에 생성
 
-	float createTime = FMath::RandRange(minTime, maxTime);
+		//GetWorld()->
 
-	GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreatEnemy, createTime);
-	//랜덤을 시간 타이머 설정
+		//SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
+		if (bDistanceEnemySpawn == false) {
+
+			CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+		}
+		else
+		{	// 25% 
+			int32 RandomNumber = FMath::RandRange(0, 99); 
+
+			if (RandomNumber < SpawnProbability) // 25%
+			{
+				CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[1], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+			}
+			else
+			{
+				CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+			}
+
+		}
+
+
+		float createTime = FMath::RandRange(minTime, maxTime);
+
+		GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreatEnemy, createTime);
+		//랜덤을 시간 타이머 설정
+	}
+
 }
 
