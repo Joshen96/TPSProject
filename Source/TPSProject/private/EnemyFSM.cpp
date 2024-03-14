@@ -217,9 +217,9 @@ void UEnemyFSM::DieState()
 	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
 	FVector P = P0 + vt;
 	me->SetActorLocation(P); 
-
+	P0.Z -= 100.0f;
 	
-	if (P.Z < -100.0f) {
+	if (P.Z < P0.Z) {
 		
 		
 		me->Destroy();//사라진다
