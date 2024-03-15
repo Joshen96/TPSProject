@@ -19,6 +19,7 @@
 
 
 
+
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
 {
@@ -208,23 +209,28 @@ void UEnemyFSM::DamageState()
 	}
 }
 //죽음상태
+
 void UEnemyFSM::DieState()
 {
+	//FTimerHandle TimerHandle;
 	//아래로떨어지도록
 	//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	me->SpawnExp();
-	FVector P0 = me->GetActorLocation();
-	FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
-	FVector P = P0 + vt;
-	me->SetActorLocation(P); 
-	P0.Z -= 100.0f;
+	//사라지는것 블프 구현
 	
-	if (P.Z < P0.Z) {
-		
-		
-		me->Destroy();//사라진다
+	//FVector P0 = me->GetActorLocation();
+	//FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
+	//FVector P = P0 + vt;
+	//me->SetActorLocation(P); 
+	//P0.Z -= 100.0f;
+	//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &me->DestoryEnemy(), 3.0f, false);
 
-	}
+	//if (P.Z < P0.Z) {
+		
+		
+	//	me->Destroy();//사라진다
+
+	//}
 }
 // 대미지 입을때 맞은곳 파라매터
 void UEnemyFSM::OnDamageProcess(int _damagehp)
@@ -301,6 +307,7 @@ bool UEnemyFSM::GetRandomPositionInNavMesh(FVector centerLocation, float radius,
 
 	return result;
 }
+
 
 void UEnemyFSM::DamageWidget_Implementation()
 {

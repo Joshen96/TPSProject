@@ -3,6 +3,7 @@
 
 #include "PlayerFire.h"
 #include "EnemyFSM.h"
+#include "ItemBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "Bullet.h"
 #include "Blueprint/UserWidget.h"
@@ -129,6 +130,7 @@ void UPlayerFire::InputFire()
 			auto hitComp = hitInfo.GetComponent();
 			// 맞은것의 컴포넌트 가져오기
 			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
+			auto itemBox = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("Hit"));
 
 			if (hitComp && hitComp->IsSimulatingPhysics()) //맞은것이 있고 맞은것이 물리적용가능하다면 
 			{
@@ -150,17 +152,29 @@ void UPlayerFire::InputFire()
 
 			}
 			
-			//부딪힌 대상이 먼저 적인지 판단하기
 
-			//auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
-			if (enemy) {
+
+			//부딪힌 대상이 먼저 적인지 판단하기
+			if (itemBox) {
+				auto item = Cast<AItemBox>(itemBox);
+				//UE_LOG(LogTemp, Warning, TEXT("touch"));
+				//GetWorld()->SpawnActor<AActor>(ItemcheckActor, bulletTrans, FRotator(0));
+
+				GetWorld()->SpawnActor<AActor>(ItemcheckActor, bulletTrans);
+					
+
+			}else if (enemy) {
 				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 				
 				enemyFSM->OnDamageProcess(me->BasicGunDamage);
 
 
 
+			}else{
+
 			}
+
+
 		}
 
 	

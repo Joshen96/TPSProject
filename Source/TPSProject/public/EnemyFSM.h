@@ -121,6 +121,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
 	void DamageWidget();
 
+	
+	
 
 	//UFUNCTION(BlueprintImplementableEvent, Category = KillCount)
 	//void KillCount();

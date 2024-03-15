@@ -53,6 +53,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
 	TSubclassOf<class AActor> bulletFactory;
 
+	UPROPERTY(EditDefaultsOnly, Category = ItemHitcheck)
+	TSubclassOf<class AActor> ItemcheckActor;
+
 	UPROPERTY(VisibleAnywhere, Category = Player)
 	class ATPSPlayer* mes;
 
@@ -118,6 +121,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
 	class UParticleSystem* bulletEffectGround;
+
+	
 
 
 

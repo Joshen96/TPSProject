@@ -76,7 +76,7 @@ public:
 	//공격 컴포넌트 부착
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite,  Category = Component)
-	class UPlayerBaseComponent* playerFire1;
+	class UPlayerBaseComponent* playerFire;
 
 
 	//체력

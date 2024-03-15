@@ -89,6 +89,11 @@ void AEnemy::kickDeActive()
 	kick->SetSphereRadius(0.1);
 }
 
+void AEnemy::DestoryEnemy()
+{
+	Destroy();
+}
+
 
 
 
