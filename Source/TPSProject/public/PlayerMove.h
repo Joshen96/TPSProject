@@ -31,13 +31,6 @@ public:
 	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent) override;
 
 
-	//걷기 속도
-	//UPROPERTY(EditAnywhere, Category = PlayerSetting)
-	//float walkSpeed = 200;
-	//뛰기 속도
-	//UPROPERTY(EditAnywhere, Category = PlayerSetting)
-	//float runSpeed = 500;
-
 	//이동관련함수
 	void InputHorizontal(float value);
 
