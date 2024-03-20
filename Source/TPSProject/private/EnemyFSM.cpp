@@ -240,6 +240,8 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 
 	currntHp-=_damagehp;
 	//ai->StopMovement();
+
+	//Ã¼·Â¹Ù
 	FOutputDeviceNull pAR;
 	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
 
