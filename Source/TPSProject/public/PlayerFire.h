@@ -28,12 +28,10 @@ public:
 	float sniper_Damage =10;
 
 
-
 	UPROPERTY()
 	class UCameraComponent* tpsCamComp;
 
 	//총매쉬 
-
 	UPROPERTY()
 	class USkeletalMeshComponent* gunMeshCompRight;
 
@@ -43,9 +41,6 @@ public:
 	//스나이퍼 총 매쉬
 	UPROPERTY()
 	class USkeletalMeshComponent* sniperMeshComp;
-
-
-
 
 
 
@@ -64,10 +59,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InputFire();
 
-	UFUNCTION(BlueprintCallable)
-	void UseGrenadeGun();
-
-	void ChangeSniperGun();
 
 	void SniperZoom();
 
@@ -76,7 +67,6 @@ public:
 
 	//bool 부분
 	
-	
 
 	bool bSniperAim = true;
 
@@ -84,24 +74,6 @@ public:
 	float GrenadeShotDelay = 1.0f;
 
 
-	//스나이퍼 줌 UI관련 
-	//UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	//class UUserWidget* sniperUIFactory;
-
-	//기본 크로스헤어 ui 관련
-	//UPROPERTY(EditDefaultsOnly, Category = SniperUI) //외부에서 UI 가져오고
-	//		class UUserWidget* crosshairUIFactory;
-
-
-
-	//여기서 사용할 스나이퍼 유아이 인스턴스
-	//class UUserWidget* _sniperUI;
-	
-
-	//여기서 사용할 크로스헤어 유아이 인스턴스
-	//class UUserWidget* _crosshairUI;
-
-	
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
 	void OnShotBullet();
@@ -110,7 +82,6 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = LVUP)
 	void BasicGunDamageUP();
 
-	
 
 	//스나이퍼 총알 파티클
 	UPROPERTY(EditDefaultsOnly, Category = BulletEffect)
@@ -123,8 +94,6 @@ public:
 	class UParticleSystem* bulletEffectGround;
 
 	
-
-
 
 	//발사 사운드 
 	UPROPERTY(EditDefaultsOnly, Category = Sound)// 아키타입에서 편집가능

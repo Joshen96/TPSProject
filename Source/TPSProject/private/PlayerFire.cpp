@@ -15,71 +15,44 @@
 #include "Kismet/KismetMathLibrary.h"
 
 
-FTimerHandle MemberTimerHandle;
+FTimerHandle MemberTimerHandle; //서브총 타이머
 
 UPlayerFire::UPlayerFire()
 {
-	//ConstructorHelpers::FObjectFinder<USoundBase>tempSound(TEXT("/Script/Engine.SoundWave'/Game/SniperGun/Rifle.Rifle'"));// 경로상에 있는 사운드 파일 을 꺼내오고
+	//블루 프린트에서 직접 세팅
 
-	//if (tempSound.Succeeded()) //성공시
-	//{
-	//	bulletsound = tempSound.Object;  //선언해둔 총알 사운드에 넣어줌
-	//}
-
-
-	
-	//ConstructorHelpers::FObjectFinder<UUserWidget>tempSniperUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_SniperUI.WBP_SniperUI'"));
-	//sniperUIFactory = tempSniperUI.Object;
-
-	//ConstructorHelpers::FObjectFinder<UUserWidget>tempcrosshairUI(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/WBP_Crosshair.WBP_Crosshair'"));
-	//crosshairUIFactory = tempcrosshairUI.Object;
 }
 
 void UPlayerFire::BeginPlay()
 {
 	Super::BeginPlay();
-	//sniper_Damage = me->BasicGunDamage;
-	//GrenadeShotDelay = me->SubGunDelay;
+
 	tpsCamComp = me->tpsCamComp;
 	gunMeshCompRight = me->gunMeshCompRight;
 	gunMeshCompLeft = me->gunMeshCompLeft;
 
-	sniperMeshComp = me->sniperMeshComp;
+	
+
 	mes = Cast<ATPSPlayer>(GetOwner());
 	
-	//스나이퍼 위젯설정
-	//_sniperUI =  sniperUIFactory;// 월드에서 스나이퍼 UI 정보를 UI 인스턴트에 생성해줌
-
-	//_crosshairUI = crosshairUIFactory;
-
-
-	ChangeSniperGun();// 시작 스나이퍼로시작
 
 	bSniperAim = false;
-	//crosshairUIFactory->AddToViewport();
-	//_crosshairUI->AddToViewport();
-	
 
 	//총알발사기 시간딜레이
 	GetWorld()->GetTimerManager().SetTimer(MemberTimerHandle, this, &UPlayerFire::DelayGrenadeGun, GrenadeShotDelay);
+
+	gunMeshCompRight->SetVisibility(false);
+	gunMeshCompLeft->SetVisibility(false);
+	//서브총 비활성
 }
 
 void UPlayerFire::SetupInputBinding(UInputComponent* PlayerInputComponent)
 {
 
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &UPlayerFire::InputFire);
-	//나중에 키보드말고 해금으로 변경해야함
-	//PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &UPlayerFire::UseGrenadeGun);
-
-	//PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &UPlayerFire::ChangeSniperGun);
-
-
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &UPlayerFire::SniperZoom);
 
 }
-
-
-
 
 
 void UPlayerFire::InputFire()
@@ -153,7 +126,6 @@ void UPlayerFire::InputFire()
 			}
 			
 
-
 			//부딪힌 대상이 먼저 적인지 판단하기
 			if (itemBox) {
 				auto item = Cast<AItemBox>(itemBox);
@@ -170,7 +142,9 @@ void UPlayerFire::InputFire()
 
 
 
-			}else{
+			}
+			else
+			{
 
 			}
 
@@ -179,47 +153,27 @@ void UPlayerFire::InputFire()
 
 	
 }
-//해금으로 변경
-void UPlayerFire::UseGrenadeGun()
-{
-	//bUseingGrenadeGun = true;
-	gunMeshCompRight->SetVisibility(true);
-	gunMeshCompLeft->SetVisibility(true);
 
-	//sniperMeshComp->SetVisibility(false);
 
-	//me->OnUsingGrenade(bUseingGrenadeGun);
-}
 
-void UPlayerFire::ChangeSniperGun()
-{
-	//bUseingGrenadeGun = false;
-	gunMeshCompRight->SetVisibility(false);
-	gunMeshCompLeft->SetVisibility(false);
-	sniperMeshComp->SetVisibility(true);
-
-	//me->OnUsingGrenade(bUseingGrenadeGun);
-}
 
 void UPlayerFire::SniperZoom()
 {
-	if (bSniperAim) {
+	if (bSniperAim) 
+	{
 
 		bSniperAim = false;
-		//_sniperUI->RemoveFromParent(); // UI를 뷰포트에 보이는것을 제거
 		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(90.0f); // 카메라 뷰를 90으로 변경 줌아웃
 
-		//_crosshairUI->AddToViewport();
 	}
 	else
 	{
 		bSniperAim = true;
-		//_sniperUI->AddToViewport();		// 스나이퍼UI를 뷰포트에 출력
 		check(tpsCamComp);
 		tpsCamComp->SetFieldOfView(45.0f); // 카메라 뷰를 45.0로 변경 줌인
 
-		//_crosshairUI->RemoveFromParent();
+	
 
 	}
 }
@@ -228,9 +182,9 @@ void UPlayerFire::DelayGrenadeGun()
 {
 	
 		if (me->bUseingGrenadeGun) {
+
 			FTransform firePosRight = gunMeshCompRight->GetSocketTransform(TEXT("FirePosition"));
 			FTransform firePosLeft = gunMeshCompLeft->GetSocketTransform(TEXT("FirePosition"));
-
 
 			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosRight);
 			me->ObjectPool->SpawnPooledObject()->SetActorRelativeTransform(firePosLeft);
