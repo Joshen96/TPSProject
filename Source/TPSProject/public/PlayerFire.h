@@ -71,7 +71,7 @@ public:
 	bool bSniperAim = true;
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite, category = Damage)
-	float GrenadeShotDelay = 1.0f;
+	float SubGunShotDelay = 1.0f;
 
 
 
