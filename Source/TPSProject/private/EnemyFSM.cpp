@@ -38,10 +38,8 @@ void UEnemyFSM::BeginPlay()
 	
 
 	currntHp = maxHp;
-	// TPS플레이어 월드에서 찾아오기
+
 	// 찾은 플레이어를 타겟에 캐스팅
-	// 이컴포넌트를 가진 액터를 가져오기
-	// 
 	auto actor = UGameplayStatics::GetActorOfClass(GetWorld(), ATPSPlayer::StaticClass());
 	
 	//플레이어 액터 담아주고
@@ -212,25 +210,9 @@ void UEnemyFSM::DamageState()
 
 void UEnemyFSM::DieState()
 {
-	//FTimerHandle TimerHandle;
-	//아래로떨어지도록
-	//me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	me->SpawnExp();
-	//사라지는것 블프 구현
 	
-	//FVector P0 = me->GetActorLocation();
-	//FVector vt = FVector::DownVector * diespeed * GetWorld()->DeltaRealTimeSeconds;
-	//FVector P = P0 + vt;
-	//me->SetActorLocation(P); 
-	//P0.Z -= 100.0f;
-	//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &me->DestoryEnemy(), 3.0f, false);
-
-	//if (P.Z < P0.Z) {
-		
-		
-	//	me->Destroy();//사라진다
-
-	//}
+	me->SpawnExp();
+	
 }
 // 대미지 입을때 맞은곳 파라매터
 void UEnemyFSM::OnDamageProcess(int _damagehp)
@@ -245,8 +227,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 	FOutputDeviceNull pAR;
 	me->CallFunctionByNameWithArguments(TEXT("SetupWidgets"), pAR, nullptr, true);
 
-	//me->CreateDamageUI(_damagehp);
-	//DamageWidget();
+
 	if (currntHp > 0)
 	{
 		if (mState == EEnemyState::Die) 
@@ -259,24 +240,13 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 
 
 
-			//me->GetCapsuleComponent()->SetSimulatePhysics(true);
-			//FVector force = -_hitInfo.ImpactNormal * me->GetCapsuleComponent()->GetMass() * 10000; // 맞은 표면에 힘의 반대방향으로 힘을 
-
-			//me->GetCapsuleComponent()->AddForce(force);
-
-			//UE_LOG(LogTemp, Log, TEXT("vetor: %s"), *force.ToString());
-
-
 			//피격 애니메이션
 			int32 index = FMath::RandRange(0, 1);
 			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
 			anim->PlayDamageAnim(*sectionName);
 
 
-			//데미지 이미지 출력하기
-			
-			//me->CallFunctionByNameWithArguments(TEXT("CreateDamageUI"), pAR, nullptr, true);
-			//me->CreateDamageUI(_damagehp);
+	
 
 		}
 			
@@ -291,8 +261,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 		
 		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		me->GetMesh()->SetSimulatePhysics(true);
-		//me->kick->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
+		
 		
 		
 	}
