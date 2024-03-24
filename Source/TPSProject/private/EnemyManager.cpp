@@ -37,28 +37,23 @@ void AEnemyManager::CreatEnemy()
 {
 	if (bSpawnLock == true) 
 	{
-		
+
 		float createTime = FMath::RandRange(minTime, maxTime);
 
 		GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreatEnemy, createTime);
 	}
 	else
 	{
-		//OnMyCustomEvent.Broadcast();
-		//CountEnemyEvent();
-		// 위치를 정하고
+		// 스폰 위치를 정하고
 		int index = FMath::RandRange(0, spawnPoints.Num() - 1); // 배열의.Num()는  int형 갯수 반환해줌
+		
 		// 적을 위치에 생성
-
-		//GetWorld()->
-
-		//SpawnActor<AEnemy>(enemyFactory, spawnPoints[index]->GetActorLocation(), FRotator(0));
 		if (bDistanceEnemySpawn == false) {
 
 			CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
 		}
-		else
-		{	// 25% 
+		else//원거리적 소환
+		{	// 기본값 25% 
 			int32 RandomNumber = FMath::RandRange(0, 99); 
 
 			if (RandomNumber < SpawnProbability) // 25%
@@ -72,7 +67,7 @@ void AEnemyManager::CreatEnemy()
 
 		}
 
-
+		//다시 시간 설정
 		float createTime = FMath::RandRange(minTime, maxTime);
 
 		GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreatEnemy, createTime);
