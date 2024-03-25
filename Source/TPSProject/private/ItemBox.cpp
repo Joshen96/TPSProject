@@ -27,7 +27,7 @@ void AItemBox::Tick(float DeltaTime)
 
 void AItemBox::OnHitProcess()
 {
-	int32 RandomSet = FMath::RandRange(0, 3);
+	int32 RandomSet = FMath::RandRange(0, 2);
 	UE_LOG(LogTemp, Warning, TEXT("Boxtouch %d"),RandomSet);
 	OnItemProcess(RandomSet);
 
