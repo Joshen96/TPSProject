@@ -79,8 +79,8 @@ public:
 	void OnShotBullet();
 
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = LVUP)
-	void BasicGunDamageUP();
+	UFUNCTION(BlueprintCallable, Category = LVUP)
+	void BasicGunDamageUP(float _DamageSetting);
 
 
 	//스나이퍼 총알 파티클
