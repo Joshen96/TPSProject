@@ -45,8 +45,7 @@ public:
 
 
 	//발사체 팩토리 구현
-	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
-	TSubclassOf<class AActor> bulletFactory;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = ItemHitcheck)
 	TSubclassOf<class AActor> ItemcheckActor;
