@@ -211,6 +211,7 @@ void UEnemyFSM::DamageState()
 void UEnemyFSM::DieState()
 {
 	
+	me->DieSound();
 	me->SpawnExp();
 	
 }
@@ -219,7 +220,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 {
 	//데미지 이미지 출력하기
 	me->CreateDamageUI(_damagehp);
-
+	me->HitSound();
 	currntHp-=_damagehp;
 	//ai->StopMovement();
 

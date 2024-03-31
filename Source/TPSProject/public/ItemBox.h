@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "SoundManager.h"
 #include "ItemBox.generated.h"
 
 UCLASS()
@@ -31,4 +32,14 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Hit)
 	void OnItemProcess(int set);
+
+	UFUNCTION()
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = SoundManager)
+	ASoundManager* SoundManagerRef;
+
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = SoundFile)
+	FString SoundPath;
 };

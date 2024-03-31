@@ -50,7 +50,7 @@ void AEnemyManager::CreatEnemy()
 		// 적을 위치에 생성
 		if (bDistanceEnemySpawn == false) {
 
-			CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+			CountEnemyEvent1(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
 		}
 		else//원거리적 소환
 		{	// 기본값 25% 
@@ -58,11 +58,11 @@ void AEnemyManager::CreatEnemy()
 
 			if (RandomNumber < SpawnProbability) // 25%
 			{
-				CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[1], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+				CountEnemyEvent1(GetWorld()->SpawnActor<AEnemy>(enemyFactory[1], spawnPoints[index]->GetActorLocation(), FRotator(0)));
 			}
 			else
 			{
-				CountEnemyEvent(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
+				CountEnemyEvent1(GetWorld()->SpawnActor<AEnemy>(enemyFactory[0], spawnPoints[index]->GetActorLocation(), FRotator(0)));
 			}
 
 		}

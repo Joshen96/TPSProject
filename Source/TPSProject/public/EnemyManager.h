@@ -67,7 +67,7 @@ public:
 	bool bDistanceEnemySpawn = false;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Count)
-	void CountEnemyEvent(AEnemy *EnemyOBJ);
+	void CountEnemyEvent1(AEnemy *EnemyOBJ);
 	
 
 };
