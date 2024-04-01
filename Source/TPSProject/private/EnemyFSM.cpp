@@ -168,7 +168,7 @@ void UEnemyFSM::AttckState()
 	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(me->GetActorLocation(), target->GetActorLocation());
 	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
 	me->SetActorRotation(Lookat);
-
+	me->Attackstart();
 
 	if (currentTime > attackDelayTime) {
 		//PRINT_LOG(TEXT("Attack!!"));
@@ -177,6 +177,7 @@ void UEnemyFSM::AttckState()
 		currentTime = 0;
 		
 		anim->bAttackPlay = true;
+
 	}
 	
 
@@ -184,7 +185,7 @@ void UEnemyFSM::AttckState()
 
 	if (distance > attackedRange )
 	{
-		
+		me->Attackend();
 		mState = EEnemyState::Move;
 		anim->animstate = mState;
 		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
@@ -213,6 +214,7 @@ void UEnemyFSM::DieState()
 	
 	me->DieSound();
 	me->SpawnExp();
+
 	
 }
 // 대미지 입을때 맞은곳 파라매터
@@ -220,7 +222,7 @@ void UEnemyFSM::OnDamageProcess(int _damagehp)
 {
 	//데미지 이미지 출력하기
 	me->CreateDamageUI(_damagehp);
-	me->HitSound();
+	me->Hit();
 	currntHp-=_damagehp;
 	//ai->StopMovement();
 

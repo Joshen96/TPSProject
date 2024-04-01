@@ -42,11 +42,18 @@ public:
 	void CreateDamageUI(int _Damage);
 
 
-	UFUNCTION(BlueprintImplementableEvent, Category = SoundCall)
-	void HitSound();
+	UFUNCTION(BlueprintImplementableEvent, Category = Hit)
+	void Hit();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = SoundCall)
 	void DieSound();
+
+
+	UFUNCTION(BlueprintImplementableEvent, Category = AttacK)
+	void Attackstart();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = AttacK)
+	void Attackend();
 
 	//UFUNCTION()
 	//void OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
