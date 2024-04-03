@@ -44,7 +44,7 @@ public:
 
 	void MoveState();
 
-	void AttckState();
+	virtual void AttckState();
 
 	void DamageState();
 
