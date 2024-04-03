@@ -22,6 +22,8 @@ ABossEnemy::ABossEnemy()
 	}
 
 	bossfsm = CreateDefaultSubobject<UBossFSM>(TEXT("BOSSFSM"));
+
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 // Called when the game starts or when spawned
@@ -43,5 +45,10 @@ void ABossEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABossEnemy::DestoryEnemy()
+{
+	Destroy();
 }
 

@@ -2,10 +2,15 @@
 
 
 #include "BossFSM.h"
+#include "TPSPlayer.h"
+#include "BossEnemy.h"
+#include "TPSProject.h"
 #include "Kismet/GameplayStatics.h"
 #include "AIController.h"
-#include "BossEnemy.h"
-#include "TPSPlayer.h"
+#include "Components/CapsuleComponent.h"
+#include "EnemyAnim.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 
 UBossFSM::UBossFSM()
@@ -16,6 +21,8 @@ UBossFSM::UBossFSM()
 
 void UBossFSM::BeginPlay()
 {
+    
+
     currntHp = maxHp;
 
     // 찾은 플레이어를 타겟에 캐스팅
@@ -24,11 +31,11 @@ void UBossFSM::BeginPlay()
     //플레이어 액터 담아주고
     target = Cast<ATPSPlayer>(actor);
     //애너미의 액터 담아주고  이제 거리계산함
-    me2 = Cast<ABossEnemy>(GetOwner());
+    me = Cast<ABossEnemy>(GetOwner());
 
-    mState = EEnemyState::Idel;
+    mState = EBossState::Idel;
 
-    anim = Cast<UEnemyAnim>(me2->GetMesh()->GetAnimInstance());
+    anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
 
 
 
@@ -40,19 +47,19 @@ void UBossFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
     
     switch (mState)
     {
-    case EEnemyState::Idel:
+    case EBossState::Idel:
         IdleState();
         break;
-    case EEnemyState::Move:
+    case EBossState::Move:
         MoveState();
         break;
-    case EEnemyState::Attck:
+    case EBossState::Attck:
         AttckState();
         break;
-    case EEnemyState::Damage:
+    case EBossState::Damage:
         DamageState();
         break;
-    case EEnemyState::Die:
+    case EBossState::Die:
         DieState();
         break;
 
@@ -86,19 +93,158 @@ void UBossFSM::AttckState()
     }
 }
 
+
 void UBossFSM::IdleState()
 {
-    //me->GetCapsuleComponent()->SetSimulatePhysics(false);
-    currentTime += GetWorld()->DeltaTimeSeconds;
-    if (currentTime > idleDelyTime) {
-        mState = EEnemyState::Move;
-        currentTime = 0;
+	//me->GetCapsuleComponent()->SetSimulatePhysics(false);
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	if (currentTime > idleDelyTime) {
+		mState = EBossState::Move;
+		currentTime = 0;
 
-        //anim->animstate = mState;// move 상태로 변환
+		anim->bossstate = mState;// move 상태로 변환
 
-
-        //GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos); 
-    }
+	}
 }
+
+void UBossFSM::MoveState()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("sad"));
+	//1.타겟 목적지가 필요
+	FVector destination = target->GetActorLocation();
+	//2.방향 필요  =  목적지 - 내위치 = 방향
+	FVector dir = destination - me->GetActorLocation();
+	//3.방향으로 이동
+	me->AddMovementInput(dir.GetSafeNormal());
+
+
+
+	if (dir.Size() < attackRange)
+	{
+
+		//ai->StopMovement();
+
+		mState = EBossState::Attck;
+		anim->bossstate = mState;
+
+		anim->bAttackPlay = true;
+
+		currentTime = attackDelayTime;
+	}
+
+
+}
+/*
+void UBossFSM::AttckState()
+{
+	//시간을 주어 공격 딜레이
+	currentTime += GetWorld()->DeltaTimeSeconds;
+
+	//공격시 타겟을 바라보도록 설정
+	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(me->GetActorLocation(), target->GetActorLocation());
+	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
+	me->SetActorRotation(Lookat);
+	me->Attackstart();
+
+	if (currentTime > attackDelayTime) {
+		//PRINT_LOG(TEXT("Attack!!"));
+
+
+		currentTime = 0;
+
+		anim->bAttackPlay = true;
+
+	}
+
+
+	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());
+
+	if (distance > attackedRange)
+	{
+		me->Attackend();
+		mState = EBossState::Move;
+		anim->bossstate = mState;
+	
+	}
+
+
+}
+*/
+//데미지 입은 상태
+void UBossFSM::DamageState()
+{
+	currentTime += GetWorld()->DeltaRealTimeSeconds;
+
+	if (currentTime > damageDelayTime)
+	{
+		mState = EBossState::Idel;
+		currentTime = 0;
+
+		anim->bossstate = mState;
+		//me->GetCapsuleComponent()->SetSimulatePhysics(false);
+	}
+}
+//죽음상태
+
+void UBossFSM::DieState()
+{
+
+	
+
+
+}
+// 대미지 입을때 맞은곳 파라매터
+void UBossFSM::OnDamageProcess(int _damagehp)
+{
+	//데미지 이미지 출력하기
+	
+	me->Hit();
+	currntHp -= _damagehp;
+	//ai->StopMovement();
+
+	
+	
+
+
+	if (currntHp > 0)
+	{
+		if (mState == EBossState::Die)
+		{
+			//me->CreateDamageUI(_damagehp);
+			return;
+		}
+		else {
+			mState = EBossState::Damage;
+
+
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 1);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			anim->PlayDamageAnim(*sectionName);
+
+
+
+
+		}
+
+
+	}
+	else
+	{
+	
+		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		mState = EBossState::Die;
+
+
+		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		me->GetMesh()->SetSimulatePhysics(true);
+
+
+
+	}
+	anim->bossstate = mState;
+}
+
 
 

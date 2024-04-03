@@ -30,11 +30,8 @@ public:
 public:
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = FSMComponent)
-	class UBossFSM* bossfsm; //컴포넌트 단독사용 불가로 에너미에 부착하여 사용하기위함
+	class UBossFSM* bossfsm; 
 	
-	
-	UFUNCTION(BlueprintImplementableEvent, Category = CreateUI)
-	void CreateDamageUI(int _Damage);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Hit)
 	void Hit();

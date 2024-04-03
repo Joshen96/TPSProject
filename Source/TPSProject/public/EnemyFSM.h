@@ -40,15 +40,15 @@ public:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category=FSM)
 	EEnemyState mState = EEnemyState::Idel;
 
-	virtual void IdleState();
+	void IdleState();
 
-	virtual void MoveState();
+	void MoveState();
 
-	virtual void AttckState();
+	void AttckState();
 
-	virtual void DamageState();
+	void DamageState();
 
-	virtual void DieState();
+	void DieState();
 
 	// 일정시간 기다렸다가 이동상태로 전환
 	// 필요한 속성 :  대기시간 , 경과시간
