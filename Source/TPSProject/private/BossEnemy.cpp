@@ -9,7 +9,7 @@ ABossEnemy::ABossEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/Blueprints/Boss/BossAnim/BossMutant.BossMutant'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/Blueprints/Boss/BossAnim/Bossfile/Mutant_Walking.Mutant_Walking'"));
 	//매쉬가져오고
 	if (tempMesh.Succeeded())
 	{

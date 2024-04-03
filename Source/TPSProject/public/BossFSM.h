@@ -19,11 +19,20 @@ class TPSPROJECT_API UBossFSM : public UEnemyFSM
 
 protected:
 	// Called when the game starts
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AttckState() override;
+
+	void IdleState() override;
+	
+	//필요속성 : 나의 위치
+
+	UPROPERTY(VisibleAnywhere, Category = FSM)
+	class ABossEnemy* me2;
+
+
 };
