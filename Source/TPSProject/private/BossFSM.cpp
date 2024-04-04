@@ -8,7 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "AIController.h"
 #include "Components/CapsuleComponent.h"
-#include "EnemyAnim.h"
+#include "BossAnim.h"
 #include "Kismet/KismetMathLibrary.h"
 
 
@@ -22,6 +22,8 @@ UBossFSM::UBossFSM()
 void UBossFSM::BeginPlay()
 {
     
+	Super::BeginPlay();
+
 
     currntHp = maxHp;
 
@@ -35,7 +37,7 @@ void UBossFSM::BeginPlay()
 
     mState = EBossState::Idel;
 
-    anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
+	bossAnim = Cast<UBossAnim>(me->GetMesh()->GetAnimInstance());
 
 
 
@@ -102,7 +104,7 @@ void UBossFSM::IdleState()
 		mState = EBossState::Move;
 		currentTime = 0;
 
-		anim->bossstate = mState;// move 상태로 변환
+		bossAnim->bossAnimState = mState;// move 상태로 변환
 
 	}
 }
@@ -125,9 +127,9 @@ void UBossFSM::MoveState()
 		//ai->StopMovement();
 
 		mState = EBossState::Attck;
-		anim->bossstate = mState;
+		bossAnim->bossAnimState = mState;
 
-		anim->bAttackPlay = true;
+		//anim->bAttackPlay = true;
 
 		currentTime = attackDelayTime;
 	}
@@ -180,7 +182,7 @@ void UBossFSM::DamageState()
 		mState = EBossState::Idel;
 		currentTime = 0;
 
-		anim->bossstate = mState;
+		bossAnim->bossAnimState = mState;
 		//me->GetCapsuleComponent()->SetSimulatePhysics(false);
 	}
 }
@@ -221,7 +223,7 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 			//피격 애니메이션
 			int32 index = FMath::RandRange(0, 1);
 			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
-			anim->PlayDamageAnim(*sectionName);
+			//anim->PlayDamageAnim(*sectionName);
 
 
 
@@ -243,7 +245,7 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 
 
 	}
-	anim->bossstate = mState;
+	bossAnim->bossAnimState = mState;
 }
 
 

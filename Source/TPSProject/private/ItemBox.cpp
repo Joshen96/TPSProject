@@ -16,7 +16,7 @@ void AItemBox::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HitZone->OnComponentBeginOverlap.AddDynamic(this, &AItemBox::OnOverlapBegin);
+	//HitZone->OnComponentBeginOverlap.AddDynamic(this, &AItemBox::OnOverlapBegin);
 }
 
 // Called every frame

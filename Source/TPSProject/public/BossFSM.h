@@ -101,7 +101,7 @@ public:
 
 	//사용중인 애니메이션 블루프린트 
 	UPROPERTY()
-	class UEnemyAnim* anim;
+	class UBossAnim* bossAnim;
 
 	UPROPERTY(EditAnywhere, Category = FSM)
 	class AAIController* ai;
