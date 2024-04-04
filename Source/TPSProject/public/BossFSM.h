@@ -35,7 +35,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = FSM)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = FSM)
 	EBossState mState = EBossState::Idel;
 
 	void IdleState();
@@ -59,7 +59,7 @@ public:
 	//목표 타깃쪽으로 이동
 	//필요 속성 : 타겟
 
-	UPROPERTY(VisibleAnywhere, Category = FSM)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = FSM)
 	class ATPSPlayer* target;
 
 	//목표 타깃으로 이동하기위해 나의 위치
@@ -70,12 +70,12 @@ public:
 
 	//공격범위 
 	UPROPERTY(EditAnywhere, Category = FSM)
-	float attackRange = 150.0f;
+	float attackRange = 800.0f;
 
 
 
 	UPROPERTY(EditAnywhere, Category = FSM)
-	float attackedRange = 500.0f;
+	float attackedRange = 1200.0f;
 
 
 	//공격 딜레이 시간

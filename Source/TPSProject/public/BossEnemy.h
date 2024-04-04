@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "BossEnemy.generated.h"
 
+
 UCLASS()
 class TPSPROJECT_API ABossEnemy : public ACharacter
 {
@@ -43,5 +44,8 @@ public:
 	void Attackend();
 
 	void DestoryEnemy();
+
+	UFUNCTION(BlueprintCallable)
+	void LaunchForward(float LaunchSpeed);
 
 };

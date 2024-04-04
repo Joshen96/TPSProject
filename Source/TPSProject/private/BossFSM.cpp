@@ -10,6 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "BossAnim.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 
@@ -72,13 +73,19 @@ void UBossFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 void UBossFSM::AttckState()
 {
-    int32 AttackType = FMath::RandRange(1, 3);
+	//me->Jump();
+	
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(me->GetActorLocation(), target->GetActorLocation());
+	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
+	me->SetActorRotation(Lookat);
+
+	int32 AttackType = FMath::RandRange(1, 3);
 
     switch (AttackType)
     {
     case 1:
-        // 첫 번째 공격 패턴 실행
-        // ...
+
         break;
     case 2:
         // 두 번째 공격 패턴 실행
@@ -93,6 +100,20 @@ void UBossFSM::AttckState()
         // ...
         break;
     }
+	
+
+	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());
+
+	if (distance > attackedRange)
+	{
+		//me->Attackend();
+		
+		mState = EBossState::Idel;
+		currentTime = 0;
+		bossAnim->bossAnimState = mState;
+
+	}
+
 }
 
 
@@ -118,8 +139,9 @@ void UBossFSM::MoveState()
 	FVector dir = destination - me->GetActorLocation();
 	//3.방향으로 이동
 	me->AddMovementInput(dir.GetSafeNormal());
+	//me->GetCharacterMovement()->MaxWalkSpeed = 12000.0f;
 
-
+	
 
 	if (dir.Size() < attackRange)
 	{

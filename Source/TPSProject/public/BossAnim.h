@@ -15,6 +15,13 @@ class TPSPROJECT_API UBossAnim : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
+
+	//virtual void NativeUpdateAnimation(float DeltaSeconds) override; 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = BossAnim) //애니블부프린트에서 가져와 사용가능하도록 BlueprintReadWrite 와 블루프린트에서 편집가능하도록 EditDefaultsOnly 
+	float speed = 0;
+
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = FSM)
 	EBossState bossAnimState; //상태확인용 나중에 동기화 해줘야함
 

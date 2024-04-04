@@ -30,6 +30,9 @@ ABossEnemy::ABossEnemy()
 void ABossEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
+	
 	
 }
 
@@ -50,5 +53,15 @@ void ABossEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 void ABossEnemy::DestoryEnemy()
 {
 	Destroy();
+}
+
+void ABossEnemy::LaunchForward(float LaunchSpeed)
+{
+	// 캐릭터 이동 방향 설정
+	FVector LaunchDirection = GetActorForwardVector(); // 현재 캐릭터의 앞 방향 벡터를 가져옴
+	LaunchDirection.Normalize(); // 벡터를 정규화하여 길이를 1로 만듦
+
+	// 캐릭터 이동
+	LaunchCharacter(LaunchDirection * LaunchSpeed, false, false); // 캐릭터를 지정된 속도와 방향으로 띄움
 }
 
