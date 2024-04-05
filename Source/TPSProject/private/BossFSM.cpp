@@ -80,10 +80,31 @@ void UBossFSM::AttckState()
 	currentTime += GetWorld()->DeltaTimeSeconds;
 	
 
-	if (distance > attackRange || distance < attackedRange)
-	{
+	if (currentTime > attackDelayTime) {
+		//PRINT_LOG(TEXT("Attack!!"));
+		//currentTime = 0;
+
+		if (distance >= 500 && distance < attackedRange)
+		{
+			
+			
+			bossAnim->bJumpAttack = true;
+			currentTime = 0;
+
+		}
+		if (distance > 10 && distance < 500) {
+
+			
+			bossAnim->bAttackPlay = true;
+			currentTime = 0;
+		}
+		
+		
 
 	}
+
+	
+
 
 	int32 AttackType = FMath::RandRange(1, 3);
 
