@@ -31,8 +31,10 @@ public:
 public:
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = FSMComponent)
-	class UBossFSM* bossfsm; 
+	class UBossFSM* bossfsm1; 
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = FSM)
+	class ATPSPlayer* target;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Hit)
 	void Hit();
@@ -48,4 +50,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LaunchForward(float LaunchSpeed);
 
+	UFUNCTION(BlueprintCallable)
+	void LookatTarget();
+	
 };

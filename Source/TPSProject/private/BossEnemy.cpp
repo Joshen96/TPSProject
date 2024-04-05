@@ -2,6 +2,9 @@
 
 
 #include "BossEnemy.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "TPSPlayer.h"
 
 // Sets default values
 ABossEnemy::ABossEnemy()
@@ -21,7 +24,7 @@ ABossEnemy::ABossEnemy()
 
 	}
 
-	bossfsm = CreateDefaultSubobject<UBossFSM>(TEXT("BOSSFSM"));
+	bossfsm1 = CreateDefaultSubobject<UBossFSM>(TEXT("BOSSFSM"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
@@ -30,7 +33,11 @@ ABossEnemy::ABossEnemy()
 void ABossEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	auto actor = UGameplayStatics::GetActorOfClass(GetWorld(), ATPSPlayer::StaticClass());
 
+	//플레이어 액터 담아주고
+	target = Cast<ATPSPlayer>(actor);
 	
 	
 	
@@ -64,4 +71,14 @@ void ABossEnemy::LaunchForward(float LaunchSpeed)
 	// 캐릭터 이동
 	LaunchCharacter(LaunchDirection * LaunchSpeed, false, false); // 캐릭터를 지정된 속도와 방향으로 띄움
 }
+
+void ABossEnemy::LookatTarget()
+{
+
+
+	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), target->GetActorLocation());
+	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
+	SetActorRotation(Lookat);
+}
+
 

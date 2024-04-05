@@ -74,11 +74,16 @@ void UBossFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 void UBossFSM::AttckState()
 {
 	//me->Jump();
-	
+
+	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());// 타겟과 거리 계산
+
 	currentTime += GetWorld()->DeltaTimeSeconds;
-	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(me->GetActorLocation(), target->GetActorLocation());
-	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
-	me->SetActorRotation(Lookat);
+	
+
+	if (distance > attackRange || distance < attackedRange)
+	{
+
+	}
 
 	int32 AttackType = FMath::RandRange(1, 3);
 
@@ -102,7 +107,8 @@ void UBossFSM::AttckState()
     }
 	
 
-	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());
+
+	
 
 	if (distance > attackedRange)
 	{
@@ -268,7 +274,15 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 
 	}
 	bossAnim->bossAnimState = mState;
+
+
+
+
+
+
 }
+
+
 
 
 

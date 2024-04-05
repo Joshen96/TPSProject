@@ -106,7 +106,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = FSM)
 	class AAIController* ai;
 
-	
+
 
 
 
