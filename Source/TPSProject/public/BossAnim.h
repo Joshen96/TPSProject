@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
 	bool bJumpAttack = false;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
+	bool bKickAttack = false;
+
 	UFUNCTION(BlueprintCallable, Category = FSMEvent)
 	void OnEndAttackAnimation();
 

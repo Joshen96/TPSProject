@@ -84,7 +84,7 @@ void UBossFSM::AttckState()
 		//PRINT_LOG(TEXT("Attack!!"));
 		//currentTime = 0;
 
-		if (distance >= 500 && distance < attackedRange)
+		if (distance >= distance_attackRangeStart && distance < distance_attacRangekEnd)
 		{
 			
 			
@@ -92,15 +92,17 @@ void UBossFSM::AttckState()
 			currentTime = 0;
 
 		}
-		if (distance > 10 && distance < 500) {
+		if (distance > close_attackRangeEnd && distance < distance_attackRangeStart) {
 
 			
+			bossAnim->bKickAttack = true;
+			currentTime = 0;
+		}
+		if (distance > close_attackRangeStart && distance < close_attackRangeEnd) {
+
 			bossAnim->bAttackPlay = true;
 			currentTime = 0;
 		}
-		
-		
-
 	}
 
 	

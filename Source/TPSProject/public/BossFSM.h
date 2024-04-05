@@ -69,13 +69,26 @@ public:
 	class ABossEnemy* me;
 
 	//공격범위 
-	UPROPERTY(EditAnywhere, Category = FSM)
-	float attackRange = 800.0f;
-
 
 
 	UPROPERTY(EditAnywhere, Category = FSM)
-	float attackedRange = 1200.0f;
+	float close_attackRangeStart = 10.0f;
+
+	UPROPERTY(EditAnywhere, Category = FSM)
+	float close_attackRangeEnd = 500.0f;
+
+
+	UPROPERTY(EditAnywhere, Category = FSM)
+	float distance_attackRangeStart = 1500.0f;
+
+	UPROPERTY(EditAnywhere, Category = FSM)
+	float distance_attacRangekEnd = 2800.0f;
+
+	UPROPERTY(EditAnywhere, Category = FSM)
+	float attackRange = 3000.0f;
+
+	UPROPERTY(EditAnywhere, Category = FSM)
+	float attackedRange = 3000.0f;
 
 	UPROPERTY(EditAnywhere, Category = FSM)
 	//공격 딜레이 시간
