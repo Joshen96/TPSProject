@@ -24,5 +24,8 @@ void UBossAnim::NativeUpdateAnimation(float DeltaSeconds)
 */
 void UBossAnim::OnEndAttackAnimation()
 {
-	bAttackPlay = false;
+	bCloseAttack = false;
+	bMiddleAttack = false;
+	bDistanceAttack = false;
+	
 }

@@ -26,13 +26,13 @@ public:
 	EBossState bossAnimState; //상태확인용 나중에 동기화 해줘야함
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
-	bool bAttackPlay = false;
+	bool bCloseAttack = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
-	bool bJumpAttack = false;
+	bool bDistanceAttack = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
-	bool bKickAttack = false;
+	bool bMiddleAttack = false;
 
 	UFUNCTION(BlueprintCallable, Category = FSMEvent)
 	void OnEndAttackAnimation();

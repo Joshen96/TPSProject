@@ -84,23 +84,29 @@ void UBossFSM::AttckState()
 		//PRINT_LOG(TEXT("Attack!!"));
 		//currentTime = 0;
 
-		if (distance >= distance_attackRangeStart && distance < distance_attacRangekEnd)
+		if (distance >= distance_attackRangeStart && distance < distance_attacRangekEnd) //원거리 공격
 		{
 			
 			
-			bossAnim->bJumpAttack = true;
+
+			bossAnim->bDistanceAttack = true;
 			currentTime = 0;
 
 		}
-		if (distance > close_attackRangeEnd && distance < distance_attackRangeStart) {
+		if (distance > close_attackRangeEnd && distance < distance_attackRangeStart) // 중거리 공격
+		{
+			int32 AttackType = FMath::RandRange(1, 3);
 
 			
-			bossAnim->bKickAttack = true;
+			bossAnim->bMiddleAttack = true;
 			currentTime = 0;
 		}
-		if (distance > close_attackRangeStart && distance < close_attackRangeEnd) {
+		if (distance > close_attackRangeStart && distance < close_attackRangeEnd)	// 근거리 공격
+		{
 
-			bossAnim->bAttackPlay = true;
+			int32 AttackType = FMath::RandRange(1, 3);
+
+			bossAnim->bCloseAttack = true;
 			currentTime = 0;
 		}
 	}
