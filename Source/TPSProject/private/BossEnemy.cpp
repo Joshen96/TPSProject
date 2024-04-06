@@ -27,6 +27,8 @@ ABossEnemy::ABossEnemy()
 	bossfsm1 = CreateDefaultSubobject<UBossFSM>(TEXT("BOSSFSM"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -34,10 +36,10 @@ void ABossEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	auto actor = UGameplayStatics::GetActorOfClass(GetWorld(), ATPSPlayer::StaticClass());
+	//auto actor = UGameplayStatics::GetActorOfClass(GetWorld(), ATPSPlayer::StaticClass());
 
 	//플레이어 액터 담아주고
-	target = Cast<ATPSPlayer>(actor);
+	//target = Cast<ATPSPlayer>(actor);
 	
 	
 	
@@ -75,8 +77,9 @@ void ABossEnemy::LaunchForward(float LaunchSpeed)
 void ABossEnemy::LookatTarget()
 {
 
+	
 
-	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), target->GetActorLocation());
+	FRotator Lookat = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), GetActorLocation());
 	Lookat.Pitch = 0; //위아래 잠금 pitch 회전잠금
 	SetActorRotation(Lookat);
 }
