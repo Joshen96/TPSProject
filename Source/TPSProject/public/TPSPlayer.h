@@ -123,7 +123,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Health)
 	
 	//피격 이벤트
-	void onHitEvent();
+	void onHitEvent(int32 hit);
 
 
 	UFUNCTION(BlueprintCallable, Category = Health)

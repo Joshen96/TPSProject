@@ -9,6 +9,7 @@
 	#include "Components/CapsuleComponent.h"
 	#include "TPSProject.h"
 	#include "Enemy.h" //애너미 공격 받기위해
+	#include "BossEnemy.h"
 	#include "Kismet/GameplayStatics.h" //일시정지 위함
 	#include "ObjectPools.h"
 	#include "Blueprint/UserWidget.h"
@@ -165,16 +166,29 @@
 	
 		//적 캐스팅
 		AEnemy* enemy = Cast<AEnemy>(OtherActor);
-
+		ABossEnemy* Boos = Cast<ABossEnemy>(OtherActor);
+		
 		//Enemy를 가진 객체에게만 데미지 이벤트 발동
 		if (enemy != nullptr)
 		{
 	
 			if (!isHit) {
-				onHitEvent();
+				onHitEvent(1);
 			}
 		
 		}
+		if (Boos != nullptr)
+		{
+
+			if (!isHit) {
+				onHitEvent(3);
+				FVector Back = -GetActorForwardVector();
+				LaunchCharacter(Back*4000,1,1);
+			}
+
+
+		}
+		
 
 	}
 
@@ -243,7 +257,7 @@
 
 	}
 
-	void ATPSPlayer::onHitEvent()
+	void ATPSPlayer::onHitEvent(int32 hit)
 	{
 		PRINT_LOG(TEXT("Damaged!!!!"));
 	
@@ -254,7 +268,7 @@
 		auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 		anim->PlayerHitAnim(*sectionName);
 
-		hp--;
+		hp-=hit;
 	
 
 		if (hp <= 0)
