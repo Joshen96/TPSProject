@@ -111,6 +111,8 @@ void UBossFSM::AttckState()
 		}
 	}
 
+
+
 	
 
 
@@ -143,7 +145,7 @@ void UBossFSM::AttckState()
 	{
 		//me->Attackend();
 		
-		mState = EBossState::Idel;
+		mState = EBossState::Move;
 		currentTime = 0;
 		bossAnim->bossAnimState = mState;
 
@@ -178,7 +180,7 @@ void UBossFSM::MoveState()
 
 	
 
-	if (dir.Size() < attackRange)
+	if (dir.Size() < 1500)
 	{
 
 		//ai->StopMovement();
