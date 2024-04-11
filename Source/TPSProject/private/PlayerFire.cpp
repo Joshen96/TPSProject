@@ -3,6 +3,7 @@
 
 #include "PlayerFire.h"
 #include "EnemyFSM.h"
+#include "BossFSM.h"
 #include "ItemBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
@@ -135,12 +136,17 @@ void UPlayerFire::InputFire()
 					
 
 			}else if (enemy) {
-				auto enemyFSM = Cast<UEnemyFSM>(enemy);
 				
-				enemyFSM->OnDamageProcess(sniper_Damage);
+				auto enemyFSM = Cast<UEnemyFSM>(enemy);
+				auto BossFSM = Cast<UBossFSM>(enemy);
+				if (enemyFSM) {
 
+					enemyFSM->OnDamageProcess(sniper_Damage);
 
-
+				}
+				if (BossFSM) {
+					BossFSM->OnDamageProcess(sniper_Damage);
+				}
 			}
 			else
 			{

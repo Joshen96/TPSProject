@@ -258,7 +258,7 @@ void UBossFSM::DieState()
 void UBossFSM::OnDamageProcess(int _damagehp)
 {
 	//데미지 이미지 출력하기
-	
+	me->CreateDamageUI(_damagehp);
 	me->Hit();
 	currntHp -= _damagehp;
 	//ai->StopMovement();
@@ -274,20 +274,7 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 			//me->CreateDamageUI(_damagehp);
 			return;
 		}
-		else {
-			mState = EBossState::Damage;
-
-
-
-			//피격 애니메이션
-			int32 index = FMath::RandRange(0, 1);
-			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
-			//anim->PlayDamageAnim(*sectionName);
-
-
-
-
-		}
+	
 
 
 	}

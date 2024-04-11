@@ -52,5 +52,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LookatTarget();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = CreateUI)
+	void CreateDamageUI(int _Damage);
 	
 };

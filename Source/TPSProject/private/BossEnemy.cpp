@@ -24,7 +24,7 @@ ABossEnemy::ABossEnemy()
 
 	}
 
-	bossfsm1 = CreateDefaultSubobject<UBossFSM>(TEXT("BOSSFSM"));
+	bossfsm1 = CreateDefaultSubobject<UBossFSM>(TEXT("FSM"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
