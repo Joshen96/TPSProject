@@ -259,6 +259,11 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 {
 	//데미지 이미지 출력하기
 	me->CreateDamageUI(_damagehp);
+
+	
+
+
+
 	me->Hit();
 	currntHp -= _damagehp;
 	//ai->StopMovement();
