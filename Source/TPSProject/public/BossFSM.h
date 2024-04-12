@@ -112,6 +112,16 @@ public:
 	float damageDelayTime = 2.0f;
 
 
+	bool health4000 = false;
+	
+	bool health3000 = false;
+
+	bool health2000 = false;
+	
+	bool health1000 = false;
+
+
+
 	//사용중인 애니메이션 블루프린트 
 	UPROPERTY()
 	class UBossAnim* bossAnim;

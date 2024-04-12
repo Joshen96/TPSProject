@@ -260,6 +260,57 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 			//me->CreateDamageUI(_damagehp);
 			return;
 		}
+		if (currntHp <= 4000 && !health4000)
+		{
+			health4000 = true;
+			//피격
+			mState = EBossState::Damage;
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 2);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			bossAnim->PlayDamageAnim(*sectionName);
+
+			
+		}
+		if (currntHp <= 3000 && !health3000)
+		{
+			health3000 = true;
+			//피격
+			mState = EBossState::Damage;
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 2);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			bossAnim->PlayDamageAnim(*sectionName);
+		}
+		if (currntHp <= 2000 && !health2000)
+		{
+			health2000 = true;
+			//피격
+			mState = EBossState::Damage;
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 2);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			bossAnim->PlayDamageAnim(*sectionName);
+		}
+		if (currntHp <= 1000 && !health1000)
+		{
+			health1000 = true;
+			//피격
+			mState = EBossState::Damage;
+
+			//피격 애니메이션
+			int32 index = FMath::RandRange(0, 2);
+			FString sectionName = FString::Printf(TEXT("Damage%d"), index);
+			bossAnim->PlayDamageAnim(*sectionName);
+		}
+
+
+
+
+
 	
 
 
