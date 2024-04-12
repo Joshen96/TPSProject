@@ -86,7 +86,7 @@ void UBossFSM::AttckState()
 
 		if (distance >= distance_attackRangeStart && distance < distance_attacRangekEnd) //원거리 공격
 		{
-			//currentTime = 0;
+			currentTime = 0;
 			
 
 			bossAnim->bDistanceAttack = true;
@@ -96,14 +96,14 @@ void UBossFSM::AttckState()
 		if (distance > close_attackRangeEnd && distance < distance_attackRangeStart&& bossAnim->bDistanceAttack==false) // 중거리 공격
 		{
 			
-			//currentTime = 0;
+			currentTime = 0;
 			
 			bossAnim->bMiddleAttack = true;
 			
 		}
 		if (distance > close_attackRangeStart && distance < close_attackRangeEnd)	// 근거리 공격
 		{
-			//currentTime = 0;
+			currentTime = 0;
 			
 
 			bossAnim->bCloseAttack = true;
@@ -116,26 +116,6 @@ void UBossFSM::AttckState()
 	
 
 
-	int32 AttackType = FMath::RandRange(1, 3);
-
-    switch (AttackType)
-    {
-    case 1:
-
-        break;
-    case 2:
-        // 두 번째 공격 패턴 실행
-        // ...
-        break;
-    case 3:
-        // 세 번째 공격 패턴 실행
-        // ...
-        break;
-    default:
-        // 기본 공격 패턴 실행
-        // ...
-        break;
-    }
 	
 
 
@@ -259,6 +239,7 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 {
 	//데미지 이미지 출력하기
 	me->CreateDamageUI(_damagehp);
+	me->SettingHPUI();
 
 	
 

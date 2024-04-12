@@ -31,7 +31,7 @@ public:
 public:
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = FSMComponent)
-	class UBossFSM* bossfsm1; 
+	class UBossFSM* bossfsm; 
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = FSM)
 	class ATPSPlayer* target;
@@ -55,5 +55,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = CreateUI)
 	void CreateDamageUI(int _Damage);
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = CreateUI)
+	void SettingHPUI();
 	
 };
