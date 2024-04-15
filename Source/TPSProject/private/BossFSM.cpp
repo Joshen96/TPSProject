@@ -229,6 +229,9 @@ void UBossFSM::DamageState()
 
 void UBossFSM::DieState()
 {
+	
+	me->Die();
+
 
 	
 
@@ -319,11 +322,12 @@ void UBossFSM::OnDamageProcess(int _damagehp)
 	{
 	
 		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		mState = EBossState::Die;
 
 
-		me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		me->GetMesh()->SetSimulatePhysics(true);
+		//me->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		//me->GetMesh()->SetSimulatePhysics(true);
 
 
 

@@ -58,5 +58,8 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent, Category = CreateUI)
 	void SettingHPUI();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Die)
+	void Die();
 	
 };

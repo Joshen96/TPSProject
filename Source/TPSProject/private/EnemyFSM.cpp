@@ -215,6 +215,8 @@ void UEnemyFSM::DieState()
 	me->DieSound();
 	me->SpawnExp();
 
+
+
 	
 }
 // 대미지 입을때 맞은곳 파라매터
