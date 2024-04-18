@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "EnemyFSM.h"
+#include "BossFSM.h"
 #include "Enemy.h"
 
 
@@ -103,15 +104,20 @@ void ABullet_OP::OnEnemyTouch(UPrimitiveComponent* OverlappedComponent, AActor* 
 
 	auto enemy = OtherActor->GetDefaultSubobjectByName(TEXT("FSM"));
 
-	if (enemy) {
-		auto enemyFSM = Cast<UEnemyFSM>(enemy);
+	auto enemyFSM = Cast<UEnemyFSM>(enemy);
+	auto bossFSM = Cast<UBossFSM>(enemy);
 
-
+	if (enemyFSM) {
+		
 		enemyFSM->OnDamageProcess(bulletDamage);
-		UE_LOG(LogTemp, Warning, TEXT("touch"));
-
 
 	}
+
+	if (bossFSM) {
+		bossFSM->OnDamageProcess(bulletDamage);
+	}
+
+
 }
 
 void ABullet_OP::FrontShot(float DeltaTime)
